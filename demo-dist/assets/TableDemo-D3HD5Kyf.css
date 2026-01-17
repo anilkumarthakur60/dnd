@@ -1,0 +1,1 @@
+.demo-table{border-collapse:collapse;width:100%;font-size:13px}.demo-table th,.demo-table td{border-bottom:1px solid var(--border);text-align:left;padding:10px 12px}.demo-table thead th{color:var(--muted);text-transform:uppercase;letter-spacing:.06em;font-size:11px}.demo-table tbody tr{background:var(--surface-2);cursor:grab}.demo-table tbody tr:hover{background:var(--border)}
