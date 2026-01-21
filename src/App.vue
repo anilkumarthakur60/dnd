@@ -23,6 +23,17 @@ const demos: DemoEntry[] = [
   { slug: 'header-slot', title: 'Header slot', loader: () => import('./demo/pages/HeaderSlotDemo.vue') },
   { slug: 'two-list-header-slot', title: 'Two list header slot', loader: () => import('./demo/pages/TwoListHeaderSlotDemo.vue') },
   { slug: 'nested', title: 'Nested', loader: () => import('./demo/pages/NestedDemo.vue') },
+  { slug: 'touch-delay', title: 'Touch delay', loader: () => import('./demo/pages/TouchDelayDemo.vue') },
+  { slug: 'multi-drag', title: 'Multi-drag', loader: () => import('./demo/pages/MultiDragDemo.vue') },
+  { slug: 'swap', title: 'Swap', loader: () => import('./demo/pages/SwapDemo.vue') },
+  { slug: 'keyboard', title: 'Keyboard a11y', loader: () => import('./demo/pages/KeyboardDemo.vue') },
+  { slug: 'axis-lock', title: 'Axis lock', loader: () => import('./demo/pages/AxisLockDemo.vue') },
+  { slug: 'custom-ghost', title: 'Custom ghost', loader: () => import('./demo/pages/CustomGhostDemo.vue') },
+  { slug: 'entrance-exit', title: 'Entrance / exit', loader: () => import('./demo/pages/EntranceExitDemo.vue') },
+  { slug: 'revert-spill', title: 'Revert on spill', loader: () => import('./demo/pages/RevertSpillDemo.vue') },
+  { slug: 'programmatic', title: 'Programmatic API', loader: () => import('./demo/pages/ProgrammaticDemo.vue') },
+  { slug: 'rtl', title: 'RTL horizontal', loader: () => import('./demo/pages/RtlDemo.vue') },
+  { slug: 'empty-list', title: 'Empty list drop', loader: () => import('./demo/pages/EmptyListDemo.vue') },
 ]
 
 const route = ref(location.hash.slice(1) || demos[0].slug)

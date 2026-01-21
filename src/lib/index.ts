@@ -1,6 +1,8 @@
 import './style.css'
 
 export { default as Draggable } from './Draggable.vue'
+export { useDraggable } from './composables/useDraggable'
+export type { UseDraggableOptions, UseDraggableReturn } from './composables/useDraggable'
 
 export type {
   DragGroup,
@@ -13,6 +15,13 @@ export type {
   CloneFn,
   PullMode,
   ItemKeyGetter,
+  Axis,
+  Direction,
+  GhostFactory,
+  GhostFactoryInfo,
+  KeyboardMoveEvent,
+  ScrollConfig,
+  DraggableExpose,
 } from './core/types'
 
 import { default as Draggable } from './Draggable.vue'
