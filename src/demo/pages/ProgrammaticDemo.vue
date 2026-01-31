@@ -12,6 +12,13 @@ const items = ref<Row[]>([
   { id: 1, text: 'Alpha' },
   { id: 2, text: 'Bravo' },
   { id: 3, text: 'Charlie' },
+  { id: 4, text: 'Delta' },
+  { id: 5, text: 'Echo' },
+  { id: 6, text: 'Foxtrot' },
+  { id: 7, text: 'Golf' },
+  { id: 8, text: 'Hotel' },
+  { id: 9, text: 'India' },
+  { id: 10, text: 'Juliet' },
 ])
 
 const dnd = useTemplateRef<DraggableExpose<Row>>('dnd')

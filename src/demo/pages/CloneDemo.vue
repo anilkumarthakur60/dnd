@@ -7,6 +7,14 @@ const palette = ref([
   { id: 'input', label: 'Text Input' },
   { id: 'select', label: 'Select' },
   { id: 'check', label: 'Checkbox' },
+  { id: 'radio', label: 'Radio Group' },
+  { id: 'toggle', label: 'Toggle Switch' },
+  { id: 'date', label: 'Date Picker' },
+  { id: 'slider', label: 'Slider' },
+  { id: 'upload', label: 'File Upload' },
+  { id: 'avatar', label: 'Avatar' },
+  { id: 'badge', label: 'Badge' },
+  { id: 'modal', label: 'Modal' },
 ])
 
 const canvas = ref<Array<{ id: string; label: string }>>([])

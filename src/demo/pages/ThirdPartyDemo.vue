@@ -15,6 +15,14 @@ const cards = ref<Card[]>([
   { id: 2, title: 'Migrate auth middleware', status: 'doing', assignee: 'Chen', tags: ['backend'] },
   { id: 3, title: 'Pricing page rev', status: 'todo', assignee: 'Bea', tags: ['marketing'] },
   { id: 4, title: 'Ship v2 dashboard', status: 'done', assignee: 'Daria', tags: ['frontend', 'launch'] },
+  { id: 5, title: 'Onboarding checklist v3', status: 'doing', assignee: 'Esha', tags: ['cs'] },
+  { id: 6, title: 'Update CHANGELOG', status: 'todo', assignee: 'Felix', tags: ['docs'] },
+  { id: 7, title: 'Search relevance tuning', status: 'doing', assignee: 'Grace', tags: ['ml', 'backend'] },
+  { id: 8, title: 'Mobile push permissions', status: 'todo', assignee: 'Hiro', tags: ['mobile', 'a11y'] },
+  { id: 9, title: 'Q2 OKR draft', status: 'done', assignee: 'Ines', tags: ['planning'] },
+  { id: 10, title: 'Postmortem: outage 4/12', status: 'done', assignee: 'Jamal', tags: ['infra', 'docs'] },
+  { id: 11, title: 'A11y audit pass 2', status: 'doing', assignee: 'Bea', tags: ['frontend', 'a11y'] },
+  { id: 12, title: 'Vendor renewal — Datadog', status: 'todo', assignee: 'Chen', tags: ['ops'] },
 ])
 
 const statusColor: Record<Card['status'], string> = {

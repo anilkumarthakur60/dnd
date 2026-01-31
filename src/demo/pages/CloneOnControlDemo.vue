@@ -21,10 +21,16 @@ onBeforeUnmount(() => {
 })
 
 const source = ref([
-  { id: 1, label: 'Note A' },
-  { id: 2, label: 'Note B' },
-  { id: 3, label: 'Note C' },
-  { id: 4, label: 'Note D' },
+  { id: 1, label: 'Meeting notes 2026-Q1' },
+  { id: 2, label: 'Onboarding checklist' },
+  { id: 3, label: 'Release runbook v4' },
+  { id: 4, label: 'Postmortem template' },
+  { id: 5, label: 'Roadmap snapshot' },
+  { id: 6, label: 'Hiring scorecard' },
+  { id: 7, label: 'PRD: search rev' },
+  { id: 8, label: 'Brand guidelines' },
+  { id: 9, label: 'OKR dashboard' },
+  { id: 10, label: 'Vendor list' },
 ])
 const target = ref<Array<{ id: number; label: string }>>([])
 

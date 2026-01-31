@@ -3,14 +3,26 @@ import { ref } from 'vue'
 import { Draggable } from '../../lib'
 
 const left = ref([
-  { id: 1, name: 'Inbox' },
-  { id: 2, name: 'Project Alpha' },
-  { id: 3, name: 'Quarterly Plan' },
+  { id: 1, name: 'Triage inbound bugs' },
+  { id: 2, name: 'Spec project Alpha' },
+  { id: 3, name: 'Quarterly OKR review' },
+  { id: 4, name: 'Refactor auth middleware' },
+  { id: 5, name: 'Migrate Postgres v16' },
+  { id: 6, name: 'Onboard new hire' },
+  { id: 7, name: 'Update changelog' },
+  { id: 8, name: 'Renew vendor contracts' },
+  { id: 9, name: 'Run security audit' },
+  { id: 10, name: 'Plan team offsite' },
 ])
 
 const right = ref([
-  { id: 4, name: 'Done last week' },
-  { id: 5, name: 'Ship release' },
+  { id: 11, name: 'Shipped: dark mode' },
+  { id: 12, name: 'Shipped: billing v2' },
+  { id: 13, name: 'Shipped: keyboard a11y' },
+  { id: 14, name: 'Shipped: mobile nav' },
+  { id: 15, name: 'Shipped: SSO support' },
+  { id: 16, name: 'Shipped: search rewrite' },
+  { id: 17, name: 'Shipped: docs site' },
 ])
 </script>
 

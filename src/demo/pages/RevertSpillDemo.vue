@@ -7,6 +7,12 @@ const items = ref([
   { id: 2, label: 'Springs back' },
   { id: 3, label: 'Try dragging outside' },
   { id: 4, label: 'I always come home' },
+  { id: 5, label: 'Drop me on the wall' },
+  { id: 6, label: 'No escape from gravity' },
+  { id: 7, label: 'Snap back!' },
+  { id: 8, label: 'Boomerang' },
+  { id: 9, label: 'Velcro item' },
+  { id: 10, label: 'Last but not least' },
 ])
 </script>
 

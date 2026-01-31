@@ -2,18 +2,18 @@
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
 
-const yItems = ref([
-  { id: 1, label: 'Y-locked: 1' },
-  { id: 2, label: 'Y-locked: 2' },
-  { id: 3, label: 'Y-locked: 3' },
-  { id: 4, label: 'Y-locked: 4' },
-])
+const yItems = ref(
+  Array.from({ length: 10 }, (_, i) => ({ id: i + 1, label: `Y-locked row ${i + 1}` })),
+)
 
 const xItems = ref([
-  { id: 'a', label: 'X-locked: A' },
-  { id: 'b', label: 'X-locked: B' },
-  { id: 'c', label: 'X-locked: C' },
-  { id: 'd', label: 'X-locked: D' },
+  { id: 'a', label: 'Mon' },
+  { id: 'b', label: 'Tue' },
+  { id: 'c', label: 'Wed' },
+  { id: 'd', label: 'Thu' },
+  { id: 'e', label: 'Fri' },
+  { id: 'f', label: 'Sat' },
+  { id: 'g', label: 'Sun' },
 ])
 </script>
 
@@ -45,6 +45,8 @@ const xItems = ref([
 .x-list {
   display: flex;
   gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
 }
 .x-item {
   background: var(--surface-2);

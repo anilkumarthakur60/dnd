@@ -10,10 +10,18 @@ interface User {
 }
 
 const users = ref<User[]>([
-  { id: 1, name: 'Aki Tanaka', role: 'Engineer' },
-  { id: 2, name: 'Beatriz Lima', role: 'Designer' },
+  { id: 1, name: 'Aki Tanaka', role: 'Senior Engineer' },
+  { id: 2, name: 'Beatriz Lima', role: 'Product Designer' },
   { id: 3, name: 'Chen Wei', role: 'PM' },
-  { id: 4, name: 'Daria Volkov', role: 'Engineer' },
+  { id: 4, name: 'Daria Volkov', role: 'Staff Engineer' },
+  { id: 5, name: 'Esha Patel', role: 'Engineer' },
+  { id: 6, name: 'Felix Müller', role: 'Brand Designer' },
+  { id: 7, name: 'Grace Okoye', role: 'PM, ML' },
+  { id: 8, name: 'Hiro Sato', role: 'Mobile Engineer' },
+  { id: 9, name: 'Ines Costa', role: 'Engineering Manager' },
+  { id: 10, name: 'Jamal Wright', role: 'SRE' },
+  { id: 11, name: 'Kira Novak', role: 'Researcher' },
+  { id: 12, name: 'Luis Ferreira', role: 'Data Engineer' },
 ])
 
 function makeGhost(info: GhostFactoryInfo<User>): HTMLElement {

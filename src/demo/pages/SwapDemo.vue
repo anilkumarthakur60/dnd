@@ -9,6 +9,12 @@ const tiles = ref([
   { id: 4, color: '#ff6e9e', label: 'D' },
   { id: 5, color: '#c084fc', label: 'E' },
   { id: 6, color: '#facc15', label: 'F' },
+  { id: 7, color: '#34d399', label: 'G' },
+  { id: 8, color: '#f87171', label: 'H' },
+  { id: 9, color: '#22d3ee', label: 'I' },
+  { id: 10, color: '#fb923c', label: 'J' },
+  { id: 11, color: '#a3e635', label: 'K' },
+  { id: 12, color: '#e879f9', label: 'L' },
 ])
 </script>
 
@@ -34,8 +40,17 @@ const tiles = ref([
 <style scoped>
 .tile-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 12px;
+}
+@media (max-width: 860px) {
+  .tile-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+  }
+}
+@media (max-width: 420px) {
+  .tile-grid { grid-template-columns: repeat(2, 1fr); }
 }
 .tile {
   aspect-ratio: 1;

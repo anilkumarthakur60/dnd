@@ -3,10 +3,18 @@ import { ref } from 'vue'
 import { Draggable } from '../../lib'
 
 const items = ref([
-  { id: 1, name: 'Settings' },
+  { id: 1, name: 'General settings' },
   { id: 2, name: 'Notifications' },
-  { id: 3, name: 'Privacy' },
+  { id: 3, name: 'Privacy & security' },
   { id: 4, name: 'Billing' },
+  { id: 5, name: 'Team & seats' },
+  { id: 6, name: 'API keys' },
+  { id: 7, name: 'Integrations' },
+  { id: 8, name: 'Audit log' },
+  { id: 9, name: 'Webhooks' },
+  { id: 10, name: 'Custom domains' },
+  { id: 11, name: 'Appearance' },
+  { id: 12, name: 'Data export' },
 ])
 </script>
 

@@ -12,6 +12,13 @@ const palette = ref<Block[]>([
   { id: 'card', label: 'Card', copies: 0 },
   { id: 'image', label: 'Image', copies: 0 },
   { id: 'text', label: 'Text', copies: 0 },
+  { id: 'video', label: 'Video', copies: 0 },
+  { id: 'gallery', label: 'Gallery', copies: 0 },
+  { id: 'cta', label: 'Call to Action', copies: 0 },
+  { id: 'quote', label: 'Quote', copies: 0 },
+  { id: 'embed', label: 'Embed', copies: 0 },
+  { id: 'divider', label: 'Divider', copies: 0 },
+  { id: 'columns', label: 'Columns', copies: 0 },
 ])
 
 const canvas = ref<Block[]>([])

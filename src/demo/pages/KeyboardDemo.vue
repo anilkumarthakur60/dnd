@@ -7,7 +7,14 @@ const items = ref([
   { id: 2, label: 'Push notifications' },
   { id: 3, label: 'Offline support' },
   { id: 4, label: 'Mobile gestures' },
-  { id: 5, label: 'Dark theme' },
+  { id: 5, label: 'Dark theme polish' },
+  { id: 6, label: 'Keyboard navigation' },
+  { id: 7, label: 'Screen reader audit' },
+  { id: 8, label: 'High contrast mode' },
+  { id: 9, label: 'Voice control hooks' },
+  { id: 10, label: 'Reduced motion respect' },
+  { id: 11, label: 'Right-to-left polish' },
+  { id: 12, label: 'i18n string review' },
 ])
 </script>
 

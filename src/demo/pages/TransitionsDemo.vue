@@ -2,9 +2,9 @@
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
 
-const a = ref(Array.from({ length: 4 }, (_, i) => ({ id: i + 1, label: `A${i + 1}` })))
-const b = ref(Array.from({ length: 4 }, (_, i) => ({ id: i + 10, label: `B${i + 1}` })))
-const c = ref(Array.from({ length: 4 }, (_, i) => ({ id: i + 20, label: `C${i + 1}` })))
+const a = ref(Array.from({ length: 7 }, (_, i) => ({ id: i + 1, label: `A${i + 1}` })))
+const b = ref(Array.from({ length: 7 }, (_, i) => ({ id: i + 10, label: `B${i + 1}` })))
+const c = ref(Array.from({ length: 7 }, (_, i) => ({ id: i + 20, label: `C${i + 1}` })))
 </script>
 
 <template>
