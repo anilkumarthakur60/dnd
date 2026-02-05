@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 interface Card {
   id: number
@@ -30,6 +31,8 @@ const statusColor: Record<Card['status'], string> = {
   doing: '#6ea8ff',
   done: '#8effc7',
 }
+
+const reset = makeReset(cards)
 </script>
 
 <template>
@@ -37,6 +40,9 @@ const statusColor: Record<Card['status'], string> = {
     The item slot can render any complex component — here, card-style elements with multiple sub-views (chips, avatars).
     Works the same as any other list.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-card">
     <Draggable v-model="cards" item-key="id" :animation="200" class="card-list">
       <template #item="{ element }">

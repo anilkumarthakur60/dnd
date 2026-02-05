@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 interface Block {
   id: string
@@ -28,12 +29,21 @@ function cloneBlock(b: Block): Block {
   cloneCounter++
   return { ...b, id: `${b.id}-${cloneCounter}`, label: `${b.label} #${cloneCounter}` }
 }
+
+const reset = makeReset(palette, canvas)
+function resetAll() {
+  cloneCounter = 0
+  reset()
+}
 </script>
 
 <template>
   <p class="demo-desc">
     The <code>:clone</code> prop transforms the item when copying — here, each clone gets a unique id and a numbered label.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="resetAll">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>Templates (pull: clone, :clone)</h3>

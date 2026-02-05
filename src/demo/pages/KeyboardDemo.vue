@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref([
   { id: 1, label: 'Background sync' },
@@ -16,6 +17,8 @@ const items = ref([
   { id: 11, label: 'Right-to-left polish' },
   { id: 12, label: 'i18n string review' },
 ])
+
+const reset = makeReset(items)
 </script>
 
 <template>
@@ -24,6 +27,9 @@ const items = ref([
     <span class="kbd">↑</span> / <span class="kbd">↓</span> to move, <span class="kbd">Space</span> again to drop, <span class="kbd">Esc</span> to cancel.
     Screen readers hear position changes via an <code>aria-live</code> region.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>Roadmap (keyboard-enabled)</h3>

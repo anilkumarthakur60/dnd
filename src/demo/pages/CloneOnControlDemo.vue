@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onBeforeUnmount } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const ctrlDown = ref(false)
 
@@ -37,6 +38,8 @@ const target = ref<Array<{ id: number; label: string }>>([])
 function pull() {
   return ctrlDown.value ? 'clone' : true
 }
+
+const reset = makeReset(source, target)
 </script>
 
 <template>
@@ -44,6 +47,9 @@ function pull() {
     Hold <span class="kbd">Ctrl</span> (or <span class="kbd">⌘</span>) while dragging to copy instead of move.
     Status: <strong>{{ ctrlDown ? 'CLONE' : 'MOVE' }}</strong>
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>Source</h3>

@@ -287,6 +287,14 @@ function batchInsert(list: RegisteredList, startIndex: number, items: unknown[])
   }
 }
 
+function isInsideSource(list: RegisteredList): boolean {
+  if (!active) return false
+  for (const s of active.sourceItems) {
+    if (s.el === list.el || s.el.contains(list.el)) return true
+  }
+  return false
+}
+
 function structuredCloneSafe(v: unknown): unknown {
   try {
     return typeof structuredClone === 'function' ? structuredClone(v) : JSON.parse(JSON.stringify(v))
@@ -330,6 +338,8 @@ function onPointerMove(e: PointerEvent) {
   let candidatePull: false | true | 'clone' = false
   for (const list of lists) {
     if (list.disabled()) continue
+    // Cycle guard: a node cannot be dropped into itself or its own subtree.
+    if (list !== active.source && isInsideSource(list)) continue
     if (list === active.source) {
       candidate = list
       candidatePull = true

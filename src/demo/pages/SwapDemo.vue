@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const tiles = ref([
   { id: 1, color: '#6ea8ff', label: 'A' },
@@ -16,12 +17,17 @@ const tiles = ref([
   { id: 11, color: '#a3e635', label: 'K' },
   { id: 12, color: '#e879f9', label: 'L' },
 ])
+
+const reset = makeReset(tiles)
 </script>
 
 <template>
   <p class="demo-desc">
     Swap mode — drop on any tile to <strong>swap positions</strong> instead of inserting. Great for grids and dashboards.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-card">
     <Draggable
       v-model="tiles"

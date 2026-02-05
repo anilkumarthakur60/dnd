@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import NestedNode from './NestedNode.vue'
+import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 export interface Node {
   id: number
@@ -282,14 +284,39 @@ function expandAll() {
   // No collapse state in this demo — placeholder to demonstrate depth visually.
   alert('Tip: drag any node into any branch — items move freely across all 5 levels.')
 }
+
+const reset = makeReset(tree)
 </script>
 
 <template>
   <p class="demo-desc">
-    Recursive nested lists, <strong>5 levels deep</strong>. Every node belongs to the same group, so you can drag a leaf into the root, a category into a leaf, or anything between.
+    Recursive tree, <strong>5 levels deep</strong>. Drop one node <em>on top of another</em> to make it a child of that node;
+    drop in the gap between siblings to reorder at the same level. Nodes can't be dropped into their own subtree.
     <a href="#" @click.prevent="expandAll" style="color: var(--accent)">How to use →</a>
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-card">
-    <NestedNode :items="tree" />
+    <Draggable
+      v-model="tree"
+      group="tree"
+      item-key="id"
+      :animation="200"
+      :empty-insert-threshold="20"
+      class="nested-root"
+    >
+      <template #item="{ element }">
+        <NestedNode :node="element" />
+      </template>
+    </Draggable>
   </div>
 </template>
+
+<style scoped>
+.nested-root {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+</style>

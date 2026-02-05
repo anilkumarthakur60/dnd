@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref(
   Array.from({ length: 18 }, (_, i) => ({ id: i + 1, label: `File-${String(i + 1).padStart(2, '0')}.txt` })),
@@ -10,12 +11,17 @@ const selected = ref<number[]>([])
 function onSelectionChange(payload: { indices: number[] }) {
   selected.value = payload.indices
 }
+
+const reset = makeReset(items)
 </script>
 
 <template>
   <p class="demo-desc">
     Hold <span class="kbd">Ctrl</span> / <span class="kbd">⌘</span> and click items to select multiple, then drag any selected item to move them all together.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>Files ({{ selected.length }} selected)</h3>

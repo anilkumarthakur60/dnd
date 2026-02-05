@@ -353,6 +353,24 @@ html, body { overscroll-behavior-y: none; }
   max-width: 720px;
 }
 
+.demo-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+button.btn.reset {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--muted);
+}
+button.btn.reset:hover {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--accent);
+}
+
 .handle-grip {
   cursor: grab;
   color: var(--muted);

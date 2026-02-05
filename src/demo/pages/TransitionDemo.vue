@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref(
   Array.from({ length: 16 }, (_, i) => ({ id: i + 1, label: `Card ${i + 1}` })),
@@ -9,14 +10,17 @@ const items = ref(
 function shuffle() {
   items.value = [...items.value].sort(() => Math.random() - 0.5)
 }
+
+const reset = makeReset(items)
 </script>
 
 <template>
   <p class="demo-desc">
     FLIP animation runs on every reorder. The button shuffles the array — items glide to their new positions.
   </p>
-  <div style="margin-bottom: 14px">
+  <div class="demo-toolbar">
     <button class="btn" @click="shuffle">Shuffle</button>
+    <button class="btn reset" @click="reset">↺ Reset</button>
   </div>
   <div class="demo-grid">
     <div class="demo-card">

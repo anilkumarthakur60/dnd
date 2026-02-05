@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const left = ref([
   { id: 1, name: 'Triage inbound bugs' },
@@ -24,12 +25,17 @@ const right = ref([
   { id: 16, name: 'Shipped: search rewrite' },
   { id: 17, name: 'Shipped: docs site' },
 ])
+
+const reset = makeReset(left, right)
 </script>
 
 <template>
   <p class="demo-desc">
     Drag items between the two lists. Both have <code>group: "tasks"</code> so they share a drop target.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>To do</h3>

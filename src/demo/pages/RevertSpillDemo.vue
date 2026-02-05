@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref([
   { id: 1, label: 'Magnetic' },
@@ -14,6 +15,8 @@ const items = ref([
   { id: 9, label: 'Velcro item' },
   { id: 10, label: 'Last but not least' },
 ])
+
+const reset = makeReset(items)
 </script>
 
 <template>
@@ -21,6 +24,9 @@ const items = ref([
     Drop an item outside any valid list and the ghost animates back to its original position.
     Enable via <code>revert-on-spill</code>.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>Snap-back list</h3>
