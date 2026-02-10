@@ -56,3 +56,36 @@ export interface DragChangePayload<T = unknown> {
 export type CloneFn<T = unknown> = (original: T) => T
 
 export type PullMode = false | true | 'clone'
+
+export type Axis = 'x' | 'y' | null
+
+export type Direction = 'horizontal' | 'vertical' | 'auto'
+
+export interface GhostFactoryInfo<T = unknown> {
+  items: T[]
+  sourceEl: HTMLElement
+  count: number
+}
+
+export type GhostFactory<T = unknown> = (info: GhostFactoryInfo<T>) => HTMLElement
+
+export interface KeyboardMoveEvent<T = unknown> {
+  item: T
+  oldIndex: number
+  newIndex: number
+}
+
+export interface ScrollConfig {
+  disabled?: boolean
+  speed?: number
+  sensitivity?: number
+}
+
+export interface DraggableExpose<T = unknown> {
+  move(from: number, to: number): void
+  insertAt(index: number, item: T): void
+  removeAt(index: number): T | undefined
+  select(indices: number[]): void
+  clearSelection(): void
+  getSelection(): number[]
+}

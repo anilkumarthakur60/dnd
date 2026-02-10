@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, computed, onMounted, onBeforeUnmount, defineAsyncComponent, type Component } from 'vue'
+import { ref, computed, onMounted, onBeforeUnmount, watch, defineAsyncComponent, type Component } from 'vue'
 
 interface DemoEntry {
   slug: string
@@ -23,27 +23,88 @@ const demos: DemoEntry[] = [
   { slug: 'header-slot', title: 'Header slot', loader: () => import('./demo/pages/HeaderSlotDemo.vue') },
   { slug: 'two-list-header-slot', title: 'Two list header slot', loader: () => import('./demo/pages/TwoListHeaderSlotDemo.vue') },
   { slug: 'nested', title: 'Nested', loader: () => import('./demo/pages/NestedDemo.vue') },
+  { slug: 'touch-delay', title: 'Touch delay', loader: () => import('./demo/pages/TouchDelayDemo.vue') },
+  { slug: 'multi-drag', title: 'Multi-drag', loader: () => import('./demo/pages/MultiDragDemo.vue') },
+  { slug: 'swap', title: 'Swap', loader: () => import('./demo/pages/SwapDemo.vue') },
+  { slug: 'keyboard', title: 'Keyboard a11y', loader: () => import('./demo/pages/KeyboardDemo.vue') },
+  { slug: 'axis-lock', title: 'Axis lock', loader: () => import('./demo/pages/AxisLockDemo.vue') },
+  { slug: 'custom-ghost', title: 'Custom ghost', loader: () => import('./demo/pages/CustomGhostDemo.vue') },
+  { slug: 'entrance-exit', title: 'Entrance / exit', loader: () => import('./demo/pages/EntranceExitDemo.vue') },
+  { slug: 'revert-spill', title: 'Revert on spill', loader: () => import('./demo/pages/RevertSpillDemo.vue') },
+  { slug: 'programmatic', title: 'Programmatic API', loader: () => import('./demo/pages/ProgrammaticDemo.vue') },
+  { slug: 'rtl', title: 'RTL horizontal', loader: () => import('./demo/pages/RtlDemo.vue') },
+  { slug: 'empty-list', title: 'Empty list drop', loader: () => import('./demo/pages/EmptyListDemo.vue') },
 ]
 
 const route = ref(location.hash.slice(1) || demos[0].slug)
+const sidebarOpen = ref(false)
+const isMobile = ref(false)
 
 function onHashChange() {
   route.value = location.hash.slice(1) || demos[0].slug
+  if (isMobile.value) sidebarOpen.value = false
 }
 
-onMounted(() => window.addEventListener('hashchange', onHashChange))
-onBeforeUnmount(() => window.removeEventListener('hashchange', onHashChange))
+function checkViewport() {
+  isMobile.value = window.matchMedia('(max-width: 860px)').matches
+  if (!isMobile.value) sidebarOpen.value = false
+}
+
+function onKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape' && sidebarOpen.value) sidebarOpen.value = false
+}
+
+onMounted(() => {
+  checkViewport()
+  window.addEventListener('hashchange', onHashChange)
+  window.addEventListener('resize', checkViewport)
+  window.addEventListener('keydown', onKeydown)
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener('hashchange', onHashChange)
+  window.removeEventListener('resize', checkViewport)
+  window.removeEventListener('keydown', onKeydown)
+})
+
+watch(sidebarOpen, (open) => {
+  document.body.style.overflow = open && isMobile.value ? 'hidden' : ''
+})
 
 const current = computed(() => demos.find((d) => d.slug === route.value) ?? demos[0])
-
 const currentComponent = computed(() => defineAsyncComponent(current.value.loader))
+
+function toggleSidebar() {
+  sidebarOpen.value = !sidebarOpen.value
+}
 </script>
 
 <template>
-  <div class="app">
-    <aside class="sidebar">
-      <h1>vue-dnd</h1>
-      <p class="tagline">Zero-dep Vue 3 drag &amp; drop</p>
+  <div class="app" :class="{ 'sidebar-open': sidebarOpen }">
+    <button
+      class="hamburger"
+      :aria-expanded="sidebarOpen"
+      aria-label="Toggle navigation"
+      @click="toggleSidebar"
+    >
+      <span /><span /><span />
+    </button>
+
+    <div
+      class="scrim"
+      :class="{ visible: sidebarOpen && isMobile }"
+      aria-hidden="true"
+      @click="sidebarOpen = false"
+    />
+
+    <aside class="sidebar" :class="{ open: sidebarOpen }">
+      <div class="sidebar-head">
+        <div>
+          <h1>vue-dnd</h1>
+          <p class="tagline">Zero-dep Vue 3 drag &amp; drop</p>
+        </div>
+        <button class="close" aria-label="Close navigation" @click="sidebarOpen = false">×</button>
+      </div>
       <nav>
         <a
           v-for="d in demos"
@@ -55,6 +116,7 @@ const currentComponent = computed(() => defineAsyncComponent(current.value.loade
         </a>
       </nav>
     </aside>
+
     <main class="main">
       <header class="topbar">
         <h2>{{ current.title }}</h2>
@@ -76,22 +138,68 @@ const currentComponent = computed(() => defineAsyncComponent(current.value.loade
   --muted: #8a93a3;
   --accent: #6ea8ff;
   --accent-2: #8effc7;
+  --sidebar-w: 240px;
+  --topbar-h: 56px;
 }
 
 * { box-sizing: border-box; }
 
 html, body, #app {
   margin: 0;
-  height: 100%;
+  min-height: 100%;
   background: var(--bg);
   color: var(--text);
   font: 14px/1.5 -apple-system, BlinkMacSystemFont, 'Segoe UI', Inter, system-ui, sans-serif;
 }
 
+html, body { overscroll-behavior-y: none; }
+
 .app {
   display: grid;
-  grid-template-columns: 240px 1fr;
-  height: 100vh;
+  grid-template-columns: var(--sidebar-w) 1fr;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+.hamburger {
+  display: none;
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 60;
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  padding: 0;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+}
+.hamburger span {
+  display: block;
+  width: 18px;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+}
+
+.scrim {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.55);
+  opacity: 0;
+  transition: opacity 0.18s ease;
+  pointer-events: none;
+  z-index: 40;
+}
+.scrim.visible {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .sidebar {
@@ -99,6 +207,28 @@ html, body, #app {
   border-right: 1px solid var(--border);
   padding: 20px 14px;
   overflow-y: auto;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  height: 100dvh;
+}
+
+.sidebar-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.sidebar-head .close {
+  display: none;
+  background: transparent;
+  color: var(--muted);
+  border: none;
+  font-size: 24px;
+  line-height: 1;
+  cursor: pointer;
+  padding: 0 4px;
 }
 
 .sidebar h1 {
@@ -121,17 +251,14 @@ html, body, #app {
 
 .sidebar nav a {
   display: block;
-  padding: 8px 10px;
+  padding: 7px 10px;
   border-radius: 6px;
   color: var(--text);
   text-decoration: none;
   font-size: 13px;
 }
 
-.sidebar nav a:hover {
-  background: var(--surface-2);
-}
-
+.sidebar nav a:hover { background: var(--surface-2); }
 .sidebar nav a.active {
   background: var(--accent);
   color: #0b0f17;
@@ -141,12 +268,18 @@ html, body, #app {
 .main {
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  min-width: 0;
+  min-height: 100vh;
+  min-height: 100dvh;
 }
 
 .topbar {
   padding: 18px 28px;
   border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: var(--bg);
+  z-index: 20;
 }
 
 .topbar h2 {
@@ -157,13 +290,13 @@ html, body, #app {
 
 .content {
   padding: 24px 28px;
-  overflow-y: auto;
+  flex: 1;
 }
 
 .demo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 16px;
   margin-bottom: 18px;
 }
 
@@ -172,6 +305,7 @@ html, body, #app {
   border: 1px solid var(--border);
   border-radius: 10px;
   padding: 14px;
+  min-width: 0;
 }
 
 .demo-card h3 {
@@ -196,6 +330,8 @@ html, body, #app {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  word-break: break-word;
 }
 
 .demo-state {
@@ -208,12 +344,31 @@ html, body, #app {
   font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
   font-size: 12px;
   white-space: pre-wrap;
+  overflow-x: auto;
 }
 
 .demo-desc {
   color: var(--muted);
   margin: 0 0 16px;
   max-width: 720px;
+}
+
+.demo-toolbar {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 14px;
+}
+
+button.btn.reset {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--muted);
+}
+button.btn.reset:hover {
+  background: var(--surface);
+  color: var(--text);
+  border-color: var(--accent);
 }
 
 .handle-grip {
@@ -229,10 +384,11 @@ button.btn {
   background: var(--surface-2);
   color: var(--text);
   border: 1px solid var(--border);
-  padding: 6px 12px;
+  padding: 8px 14px;
   border-radius: 6px;
   cursor: pointer;
-  font-size: 12px;
+  font-size: 13px;
+  min-height: 36px;
 }
 
 button.btn:hover { background: var(--border); }
@@ -247,5 +403,108 @@ button.btn:hover { background: var(--border); }
   font-size: 11px;
   background: var(--surface-2);
   color: var(--text);
+}
+
+/* === Tablet === */
+@media (max-width: 1100px) {
+  :root { --sidebar-w: 220px; }
+  .content { padding: 20px 22px; }
+  .topbar { padding: 16px 22px; }
+  .demo-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
+}
+
+/* === Mobile === */
+@media (max-width: 860px) {
+  .app { grid-template-columns: 1fr; }
+
+  .hamburger { display: flex; }
+
+  .scrim { display: block; }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(280px, 84vw);
+    height: 100vh;
+    height: 100dvh;
+    transform: translateX(-105%);
+    transition: transform 0.22s ease;
+    z-index: 50;
+    box-shadow: 8px 0 24px rgba(0, 0, 0, 0.4);
+    padding: 14px 10px;
+  }
+  .sidebar.open { transform: translateX(0); }
+  .sidebar nav a { font-size: 13.5px; padding: 9px 12px; }
+  .sidebar-head .close { display: block; }
+
+  .topbar {
+    padding: 10px 14px 10px 60px;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
+  }
+  .topbar h2 { font-size: 16px; }
+
+  .content {
+    padding: 12px 12px 32px;
+  }
+
+  .demo-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .demo-desc {
+    font-size: 13px;
+    margin: 0 0 10px;
+  }
+
+  .demo-card {
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .demo-card h3 {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .demo-list { gap: 4px; }
+
+  .demo-item {
+    padding: 8px 10px;
+    min-height: 40px;
+    font-size: 13px;
+    border-radius: 6px;
+  }
+
+  .demo-state {
+    font-size: 11px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    max-height: 200px;
+    overflow: auto;
+  }
+
+  button.btn {
+    min-height: 38px;
+    padding: 8px 14px;
+    font-size: 12.5px;
+  }
+
+  .kbd { font-size: 10.5px; padding: 1px 5px; }
+}
+
+/* === Small phones === */
+@media (max-width: 420px) {
+  .topbar { padding: 10px 12px 10px 58px; }
+  .topbar h2 { font-size: 15px; }
+  .content { padding: 10px 10px 28px; }
+  .demo-card { padding: 8px; }
+  .demo-item { padding: 7px 9px; font-size: 12.5px; min-height: 38px; }
+  .demo-desc { font-size: 12.5px; line-height: 1.45; }
+  .demo-state { font-size: 10.5px; padding: 8px; }
 }
 </style>
