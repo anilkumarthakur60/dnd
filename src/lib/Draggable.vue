@@ -112,7 +112,7 @@ onMounted(() => {
   registered = register({
     el: containerRef.value,
     group: groupObj.value,
-    disabled: () => !!props.disabled,
+    disabled: () => props.disabled,
     getItems: getItemElements,
     listRef: () => internal.value as unknown[],
     applyChange,

@@ -196,6 +196,13 @@ html, body, #app {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 10px;
+  transition: background 0.12s, border-color 0.12s;
+}
+
+.demo-item:hover {
+  background: var(--border);
+  border-color: var(--muted);
 }
 
 .demo-state {
