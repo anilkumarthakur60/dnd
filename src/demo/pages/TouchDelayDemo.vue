@@ -4,28 +4,32 @@ import { Draggable } from '../../lib'
 import { makeReset } from '../composables/useReset'
 
 const items = ref(
-  Array.from({ length: 16 }, (_, i) => ({ id: i + 1, label: `Card ${i + 1}` })),
+  Array.from({ length: 12 }, (_, i) => ({ id: i + 1, label: `Item ${i + 1}` })),
 )
-
-function shuffle() {
-  items.value = [...items.value].sort(() => Math.random() - 0.5)
-}
 
 const reset = makeReset(items)
 </script>
 
 <template>
   <p class="demo-desc">
-    FLIP animation runs on every reorder. The button shuffles the array — items glide to their new positions.
+    On a touch device, long-press for ~200ms to start a drag. A quick swipe still scrolls the page.
+    On desktop (mouse), drag works instantly.
   </p>
   <div class="demo-toolbar">
-    <button class="btn" @click="shuffle">Shuffle</button>
     <button class="btn reset" @click="reset">↺ Reset</button>
   </div>
   <div class="demo-grid">
     <div class="demo-card">
-      <h3>Cards (animation: 400ms)</h3>
-      <Draggable v-model="items" item-key="id" :animation="400" class="demo-list">
+      <h3>Long-press to drag (touch only)</h3>
+      <Draggable
+        v-model="items"
+        item-key="id"
+        :animation="200"
+        :delay="200"
+        delay-on-touch-only
+        :touch-start-threshold="6"
+        class="demo-list"
+      >
         <template #item="{ element }">
           <div class="demo-item">{{ element.label }}</div>
         </template>

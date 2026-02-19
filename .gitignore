@@ -8,8 +8,18 @@ pnpm-debug.log*
 lerna-debug.log*
 
 node_modules
+
+# Library build output
 dist
 dist-ssr
+
+# Demo app build output
+demo-dist
+
+# Test / coverage artifacts
+coverage
+*.tsbuildinfo
+
 *.local
 
 # Editor directories and files

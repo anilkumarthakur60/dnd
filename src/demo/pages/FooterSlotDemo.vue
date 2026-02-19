@@ -1,11 +1,17 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref([
   { id: 1, text: 'Buy groceries' },
   { id: 2, text: 'Walk the dog' },
-  { id: 3, text: 'Write the report' },
+  { id: 3, text: 'Write the weekly report' },
+  { id: 4, text: 'Renew car insurance' },
+  { id: 5, text: 'Pay credit card bill' },
+  { id: 6, text: 'Pick up dry cleaning' },
+  { id: 7, text: 'Schedule dentist appointment' },
+  { id: 8, text: 'Order new running shoes' },
 ])
 
 const newText = ref('')
@@ -14,12 +20,17 @@ function add() {
   items.value = [...items.value, { id: Date.now(), text: newText.value.trim() }]
   newText.value = ''
 }
+
+const reset = makeReset(items)
 </script>
 
 <template>
   <p class="demo-desc">
     A <code>#footer</code> slot lives below the items inside the container — but isn't draggable. Use it for "Add item" inputs, totals, etc.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>Todos</h3>

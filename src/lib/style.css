@@ -1,3 +1,7 @@
+.vue-dnd-wrap {
+  position: relative;
+}
+
 .vue-dnd-container {
   position: relative;
 }
@@ -13,6 +17,11 @@
   cursor: grabbing;
 }
 
+.vue-dnd-item:focus-visible {
+  outline: 2px solid #6ea8ff;
+  outline-offset: 2px;
+}
+
 .vue-dnd-placeholder {
   opacity: 0.35;
   filter: saturate(0.4);
@@ -21,4 +30,26 @@
 .vue-dnd-ghost {
   pointer-events: none;
   will-change: transform;
+}
+
+.vue-dnd-selected {
+  outline: 2px solid #6ea8ff;
+  outline-offset: -2px;
+}
+
+.vue-dnd-keyboard-active {
+  outline: 2px dashed #6ea8ff;
+  outline-offset: -2px;
+}
+
+.vue-dnd-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
 }
