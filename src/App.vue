@@ -320,6 +320,7 @@ html, body { overscroll-behavior-y: none; }
   display: flex;
   flex-direction: column;
   gap: 6px;
+  min-height: 48px;
 }
 
 .demo-item {
@@ -330,7 +331,7 @@ html, body { overscroll-behavior-y: none; }
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  gap: 8px;
   word-break: break-word;
   transition: background 0.12s, border-color 0.12s;
 }
@@ -476,8 +477,6 @@ button.btn:hover { background: var(--border); }
     font-size: 11px;
     margin-bottom: 8px;
   }
-
-  .demo-list { gap: 4px; }
 
   .demo-item {
     padding: 8px 10px;
