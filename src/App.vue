@@ -40,6 +40,34 @@ const route = ref(location.hash.slice(1) || demos[0].slug)
 const sidebarOpen = ref(false)
 const isMobile = ref(false)
 
+type Theme = 'light' | 'dark'
+const STORAGE_KEY = 'vue-dnd-theme'
+const prefersDark = () =>
+  typeof window !== 'undefined' && window.matchMedia('(prefers-color-scheme: dark)').matches
+const initialTheme: Theme = ((): Theme => {
+  const stored = localStorage.getItem(STORAGE_KEY)
+  if (stored === 'light' || stored === 'dark') return stored
+  const urlTheme = new URLSearchParams(location.search).get('theme')
+  if (urlTheme === 'light' || urlTheme === 'dark') return urlTheme
+  return prefersDark() ? 'dark' : 'light'
+})()
+const theme = ref<Theme>(initialTheme)
+
+function applyTheme(t: Theme) {
+  document.documentElement.dataset.theme = t
+  document.documentElement.style.colorScheme = t
+}
+applyTheme(theme.value)
+
+watch(theme, (t) => {
+  applyTheme(t)
+  localStorage.setItem(STORAGE_KEY, t)
+})
+
+function toggleTheme() {
+  theme.value = theme.value === 'dark' ? 'light' : 'dark'
+}
+
 function onHashChange() {
   route.value = location.hash.slice(1) || demos[0].slug
   if (isMobile.value) sidebarOpen.value = false
@@ -120,6 +148,15 @@ function toggleSidebar() {
     <main class="main">
       <header class="topbar">
         <h2>{{ current.title }}</h2>
+        <button
+          class="theme-toggle"
+          type="button"
+          :aria-label="`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`"
+          :title="`Switch to ${theme === 'dark' ? 'light' : 'dark'} mode`"
+          @click="toggleTheme"
+        >
+          <span aria-hidden="true">{{ theme === 'dark' ? '☀️' : '🌙' }}</span>
+        </button>
       </header>
       <section class="content">
         <component :is="currentComponent" />
@@ -130,6 +167,12 @@ function toggleSidebar() {
 
 <style>
 :root {
+  --sidebar-w: 240px;
+  --topbar-h: 56px;
+}
+
+:root,
+:root[data-theme='dark'] {
   --bg: #0e1014;
   --surface: #161a22;
   --surface-2: #1f2530;
@@ -138,8 +181,19 @@ function toggleSidebar() {
   --muted: #8a93a3;
   --accent: #6ea8ff;
   --accent-2: #8effc7;
-  --sidebar-w: 240px;
-  --topbar-h: 56px;
+  --accent-on: #0b0f17;
+}
+
+:root[data-theme='light'] {
+  --bg: #ffffff;
+  --surface: #f6f7f9;
+  --surface-2: #eef0f4;
+  --border: #d8dce4;
+  --text: #0e1014;
+  --muted: #5b6472;
+  --accent: #2d6df0;
+  --accent-2: #1aa672;
+  --accent-on: #ffffff;
 }
 
 * { box-sizing: border-box; }
@@ -261,7 +315,7 @@ html, body { overscroll-behavior-y: none; }
 .sidebar nav a:hover { background: var(--surface-2); }
 .sidebar nav a.active {
   background: var(--accent);
-  color: #0b0f17;
+  color: var(--accent-on);
   font-weight: 600;
 }
 
@@ -280,12 +334,37 @@ html, body { overscroll-behavior-y: none; }
   top: 0;
   background: var(--bg);
   z-index: 20;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
 }
 
 .topbar h2 {
   margin: 0;
   font-size: 20px;
   letter-spacing: -0.01em;
+}
+
+.theme-toggle {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  line-height: 1;
+  padding: 0;
+}
+.theme-toggle:hover { background: var(--surface-2); }
+.theme-toggle:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
 }
 
 .content {

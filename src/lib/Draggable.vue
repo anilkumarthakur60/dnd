@@ -15,9 +15,6 @@ import type {
 import { register, unregister, normalizeGroup } from './core/registry'
 import type { RegisteredList, ApplyChange } from './core/registry'
 import { beginDrag, isDragging } from './core/dragController'
-import type { MoveInfo, EndInfo } from './core/dragController'
-
-defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(
   defineProps<{
@@ -201,11 +198,11 @@ onMounted(() => {
   registered = register({
     el: containerRef.value,
     group: groupObj.value,
-    disabled: () => props.disabled,
+    disabled: () => !!props.disabled,
     getItems: getItemElements,
     listRef: () => internal.value as unknown[],
     applyChange,
-    itemAt: (i: number) => internal.value[i],
+    itemAt: (i) => internal.value[i],
     emptyInsertThreshold: () => props.emptyInsertThreshold ?? 0,
     rtl: isRtl,
   })
@@ -392,7 +389,7 @@ function actuallyBeginDrag(e: PointerEvent, found: { el: HTMLElement; index: num
     revertOnSpill: props.revertOnSpill,
     removeOnSpill: props.removeOnSpill,
     revertClone: props.revertClone,
-    cloneFn: props.clone ? (it: unknown) => props.clone!(it as T) : undefined,
+    cloneFn: props.clone ? (it) => props.clone!(it as T) : undefined,
     ghostFactory: props.ghostFactory as GhostFactory | undefined,
     ghostClass: props.ghostClass,
     chosenClass: props.chosenClass,
@@ -402,7 +399,7 @@ function actuallyBeginDrag(e: PointerEvent, found: { el: HTMLElement; index: num
       speed: props.scrollSpeed,
       sensitivity: props.scrollSensitivity,
     },
-    onStart: (origEvent: PointerEvent) => {
+    onStart: (origEvent) => {
       emit('start', {
         item,
         index: oldIndex,
@@ -411,7 +408,7 @@ function actuallyBeginDrag(e: PointerEvent, found: { el: HTMLElement; index: num
         originalEvent: origEvent,
       })
     },
-    onMove: (info: MoveInfo) => {
+    onMove: (info) => {
       emit('move', {
         item,
         fromList: internal.value,
@@ -424,7 +421,7 @@ function actuallyBeginDrag(e: PointerEvent, found: { el: HTMLElement; index: num
         originalEvent: info.pointerEvent,
       })
     },
-    onEnd: (info: EndInfo) => {
+    onEnd: (info) => {
       emit('unchoose', { item, index: oldIndex })
       const toListItems = (info.toList?.listRef() as T[] | undefined) ?? internal.value
       emit('end', {
@@ -572,44 +569,44 @@ defineExpose({
 </script>
 
 <template>
-  <component
-    :is="transitionName ? 'TransitionGroup' : tag"
-    v-bind="{ ...(transitionName ? { tag, name: transitionName } : {}), ...$attrs }"
-    ref="containerRef"
-    class="vue-dnd-container"
-    @pointerdown="onPointerDown"
-  >
-    <template v-if="!transitionName">
-      <slot name="header" />
-    </template>
+  <div class="vue-dnd-wrap">
     <component
-      v-for="(item, index) in internal"
-      :is="itemTag"
-      :key="resolveKey(item, index)"
-      :data-vue-dnd-index="index"
-      :class="itemClass(index)"
-      :tabindex="keyboard && !disabled ? 0 : -1"
-      :aria-grabbed="keyboard && keyboardActiveIndex === index ? 'true' : undefined"
-      :aria-posinset="index + 1"
-      :aria-setsize="internal.length"
-      :role="keyboard ? 'option' : undefined"
-      @click="onItemClick($event, index)"
-      @keydown="onItemKeyDown($event, index)"
+      :is="transitionName ? 'TransitionGroup' : tag"
+      v-bind="transitionName ? { tag, name: transitionName } : {}"
+      ref="containerRef"
+      class="vue-dnd-container"
+      @pointerdown="onPointerDown"
     >
-      <slot name="item" :element="item" :index="index" :selected="isSelected(index)">
-        {{ item }}
-      </slot>
+      <template v-if="!transitionName">
+        <slot name="header" />
+      </template>
+      <component
+        v-for="(item, index) in internal"
+        :is="itemTag"
+        :key="resolveKey(item, index)"
+        :data-vue-dnd-index="index"
+        :class="itemClass(index)"
+        :tabindex="keyboard && !disabled ? 0 : -1"
+        :aria-grabbed="keyboard && keyboardActiveIndex === index ? 'true' : undefined"
+        :aria-posinset="index + 1"
+        :aria-setsize="internal.length"
+        :role="keyboard ? 'option' : undefined"
+        @click="onItemClick($event, index)"
+        @keydown="onItemKeyDown($event, index)"
+      >
+        <slot name="item" :element="item" :index="index" :selected="isSelected(index)">
+          {{ item }}
+        </slot>
+      </component>
+      <template v-if="!transitionName">
+        <slot name="footer" />
+      </template>
     </component>
-    <template v-if="!transitionName">
-      <slot name="footer" />
-    </template>
-  </component>
-  <Teleport to="body">
     <div
       ref="liveRef"
       class="vue-dnd-live"
       aria-live="polite"
       aria-atomic="true"
     />
-  </Teleport>
+  </div>
 </template>

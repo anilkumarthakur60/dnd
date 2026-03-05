@@ -1,3 +1,7 @@
+.vue-dnd-wrap {
+  position: relative;
+}
+
 .vue-dnd-container {
   position: relative;
 }

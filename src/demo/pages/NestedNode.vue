@@ -42,7 +42,7 @@ function update(next: Node[]) {
   display: flex;
   flex-direction: column;
   gap: 4px;
-  padding: 4px 6px 6px 14px;
+  padding: 4px 0 6px 14px;
   background: var(--surface-2);
   border: 1px solid var(--border);
   border-radius: 7px;
@@ -88,7 +88,7 @@ function update(next: Node[]) {
 }
 
 @media (max-width: 860px) {
-  .nested-node { padding: 3px 4px 4px 10px; }
+  .nested-node { padding: 3px 0 4px 10px; }
   .nested-node::before { left: 4px; top: 24px; }
   .node-label { font-size: 12px; padding: 3px 2px; margin-left: -6px; }
 }

@@ -4,6 +4,19 @@
   "description": "Zero-dependency Vue 3 drag-and-drop. Lists, tables, nested, clone, handle, animated transitions — all from scratch on Pointer Events.",
   "type": "module",
   "license": "MIT",
+  "author": {
+    "name": "Er. Anil Kumar Thakur",
+    "email": "anilkumarthakur60@gmail.com",
+    "url": "https://github.com/anilkumarthakur60"
+  },
+  "homepage": "https://github.com/anilkumarthakur60/vue-dnd#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anilkumarthakur60/vue-dnd.git"
+  },
+  "bugs": {
+    "url": "https://github.com/anilkumarthakur60/vue-dnd/issues"
+  },
   "keywords": [
     "vue",
     "vue3",
@@ -18,7 +31,9 @@
   ],
   "files": [
     "dist",
-    "README.md"
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
   ],
   "main": "./dist/vue-dnd.umd.cjs",
   "module": "./dist/vue-dnd.js",
@@ -34,15 +49,20 @@
   "sideEffects": [
     "**/*.css"
   ],
+  "engines": {
+    "node": ">=18"
+  },
   "scripts": {
     "dev": "vite",
     "dev:host": "vite --host",
-    "build": "vite build",
-    "build:demo": "vue-tsc -b && vite build --mode demo",
+    "build": "vue-tsc --noEmit -p tsconfig.lib.json && vite build",
+    "build:demo": "vue-tsc --noEmit -p tsconfig.app.json && vite build --mode demo",
     "preview": "vite preview",
-    "typecheck": "vue-tsc --noEmit -p tsconfig.app.json",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.app.json && vue-tsc --noEmit -p tsconfig.lib.json",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "prepack": "npm run build",
+    "prepublishOnly": "npm run typecheck && npm run test && npm run build"
   },
   "peerDependencies": {
     "vue": "^3.3.0"
@@ -59,5 +79,8 @@
     "vitest": "^4.1.5",
     "vue": "^3.5.34",
     "vue-tsc": "^3.2.8"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
