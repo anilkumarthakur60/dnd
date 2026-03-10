@@ -1,86 +1,47 @@
 {
-  "name": "vue-dnd",
-  "version": "0.1.0",
-  "description": "Zero-dependency Vue 3 drag-and-drop. Lists, tables, nested, clone, handle, animated transitions — all from scratch on Pointer Events.",
+  "name": "dnd-monorepo",
+  "private": true,
   "type": "module",
-  "license": "MIT",
-  "author": {
-    "name": "Er. Anil Kumar Thakur",
-    "email": "anilkumarthakur60@gmail.com",
-    "url": "https://github.com/anilkumarthakur60"
+  "version": "0.0.0",
+  "description": "Monorepo for @anil-labs/dnd — zero-dependency drag & drop (sortable lists, groups, multi-drag, keyboard a11y) with React, Vue, Svelte, Solid and Web Component bindings",
+  "scripts": {
+    "build": "pnpm --filter \"./packages/*\" -r build",
+    "dev": "pnpm --filter \"./packages/*\" -r --parallel dev",
+    "test": "pnpm --filter \"./packages/*\" -r test",
+    "test:coverage": "pnpm --filter @anil-labs/dnd-core test:coverage",
+    "typecheck": "pnpm --filter \"./packages/*\" -r typecheck",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "check": "pnpm run lint && pnpm run format:check && pnpm run typecheck && pnpm run test",
+    "example:vanilla": "pnpm --filter example-vanilla dev",
+    "example:react": "pnpm --filter example-react dev",
+    "example:vue": "pnpm --filter example-vue dev",
+    "example:svelte": "pnpm --filter example-svelte dev",
+    "example:solid": "pnpm --filter example-solid dev",
+    "example:element": "pnpm --filter example-element dev",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "pnpm build && changeset publish",
+    "build:demos": "node scripts/build-demos.mjs",
+    "docs:dev": "pnpm --filter docs dev",
+    "docs:build": "pnpm --filter docs build",
+    "docs:preview": "pnpm --filter docs preview"
   },
-  "homepage": "https://github.com/anilkumarthakur60/vue-dnd#readme",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/anilkumarthakur60/vue-dnd.git"
+  "devDependencies": {
+    "@changesets/cli": "^2.27.10",
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.7.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.1",
+    "globals": "^17.7.0",
+    "prettier": "^3.9.5",
+    "prettier-plugin-svelte": "^4.1.1",
+    "typescript-eslint": "^8.63.0"
   },
-  "bugs": {
-    "url": "https://github.com/anilkumarthakur60/vue-dnd/issues"
-  },
-  "keywords": [
-    "vue",
-    "vue3",
-    "draggable",
-    "drag-and-drop",
-    "dnd",
-    "sortable",
-    "list",
-    "nested",
-    "table",
-    "typescript"
-  ],
-  "files": [
-    "dist",
-    "README.md",
-    "LICENSE",
-    "CHANGELOG.md"
-  ],
-  "main": "./dist/vue-dnd.umd.cjs",
-  "module": "./dist/vue-dnd.js",
-  "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "import": "./dist/vue-dnd.js",
-      "require": "./dist/vue-dnd.umd.cjs"
-    },
-    "./style.css": "./dist/vue-dnd.css"
-  },
-  "sideEffects": [
-    "**/*.css"
-  ],
   "engines": {
     "node": ">=18"
   },
-  "scripts": {
-    "dev": "vite",
-    "dev:host": "vite --host",
-    "build": "vue-tsc --noEmit -p tsconfig.lib.json && vite build",
-    "build:demo": "vue-tsc --noEmit -p tsconfig.app.json && vite build --mode demo",
-    "preview": "vite preview",
-    "typecheck": "vue-tsc --noEmit -p tsconfig.app.json && vue-tsc --noEmit -p tsconfig.lib.json",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "prepack": "npm run build",
-    "prepublishOnly": "npm run typecheck && npm run test && npm run build"
-  },
-  "peerDependencies": {
-    "vue": "^3.3.0"
-  },
-  "devDependencies": {
-    "@types/node": "^24.12.3",
-    "@vitejs/plugin-vue": "^6.0.6",
-    "@vue/test-utils": "^2.4.10",
-    "@vue/tsconfig": "^0.9.1",
-    "jsdom": "^29.1.1",
-    "typescript": "~6.0.2",
-    "vite": "^8.0.12",
-    "vite-plugin-dts": "^4.5.4",
-    "vitest": "^4.1.5",
-    "vue": "^3.5.34",
-    "vue-tsc": "^3.2.8"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
+  "packageManager": "pnpm@11.12.0"
 }
