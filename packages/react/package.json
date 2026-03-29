@@ -1,0 +1,66 @@
+{
+  "name": "@anil-labs/dnd-react",
+  "version": "0.1.0",
+  "description": "React bindings for @anil-labs/dnd-core — the <Draggable> component and useDraggable hook for sortable lists, cross-list groups, multi-drag and keyboard a11y.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "echo \"covered by @anil-labs/dnd-core\"",
+    "typecheck": "tsc --noEmit",
+    "prepack": "pnpm run build"
+  },
+  "keywords": [
+    "react",
+    "drag-and-drop",
+    "dnd",
+    "sortable",
+    "draggable",
+    "list",
+    "reorder"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "Er. Anil Kumar Thakur <anilkumarthakur60@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anilkumarthakur60/vue-dnd.git",
+    "directory": "packages/react"
+  },
+  "homepage": "https://github.com/anilkumarthakur60/vue-dnd/tree/main/packages/react#readme",
+  "bugs": "https://github.com/anilkumarthakur60/vue-dnd/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@anil-labs/dnd-core": "workspace:^"
+  },
+  "peerDependencies": {
+    "react": ">=18",
+    "react-dom": ">=18"
+  },
+  "devDependencies": {
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}
