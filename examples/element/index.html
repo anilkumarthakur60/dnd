@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@anil-labs/dnd — Web Component example</title>
+  </head>
+  <body>
+    <main>
+      <div class="hero">
+        <span class="badge">Web Component</span>
+        <h1>@anil-labs/dnd</h1>
+        <p class="tag">&lt;dnd-list&gt; — plain HTML children become a sortable list.</p>
+      </div>
+
+      <div class="board">
+        <section class="col">
+          <h2>To do</h2>
+          <dnd-list group="tasks" animation="200" class="list" id="todo">
+            <div class="card">Design the landing page</div>
+            <div class="card">Wire up authentication</div>
+            <div class="card">Write API docs</div>
+            <div class="card">Fix mobile nav</div>
+          </dnd-list>
+        </section>
+
+        <section class="col">
+          <h2>Done</h2>
+          <dnd-list group="tasks" animation="200" class="list">
+            <div class="card">Set up CI</div>
+            <div class="card">Ship v0.1</div>
+          </dnd-list>
+        </section>
+
+        <section class="col">
+          <h2>Keyboard (focus + Space)</h2>
+          <dnd-list keyboard animation="200" list-label="Keyboard demo" class="list">
+            <div class="card">Alpha</div>
+            <div class="card">Bravo</div>
+            <div class="card">Charlie</div>
+          </dnd-list>
+        </section>
+      </div>
+
+      <p class="hint">
+        Drag between <em>To do</em> and <em>Done</em>. Third list: focus an item, press
+        <code>Space</code>, move with <code>↑</code>/<code>↓</code>, drop with <code>Space</code>.
+      </p>
+      <p class="hint" id="status">Waiting for your first drop…</p>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

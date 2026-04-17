@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@anil-labs/dnd — Vanilla example</title>
+  </head>
+  <body>
+    <main>
+      <div class="hero">
+        <span class="badge">Vanilla JS</span>
+        <h1>@anil-labs/dnd</h1>
+        <p class="tag">createSortable() on plain DOM — no framework, no dependencies.</p>
+      </div>
+
+      <div class="board">
+        <section class="col">
+          <h2>To do</h2>
+          <ul class="list" id="todo">
+            <li class="card">Design the landing page</li>
+            <li class="card">Wire up authentication</li>
+            <li class="card">Write API docs</li>
+            <li class="card">Fix mobile nav</li>
+          </ul>
+        </section>
+        <section class="col">
+          <h2>Done</h2>
+          <ul class="list" id="done">
+            <li class="card">Set up CI</li>
+            <li class="card">Ship v0.1</li>
+          </ul>
+        </section>
+        <section class="col">
+          <h2>Keyboard (focus + Space)</h2>
+          <ul class="list" id="keys">
+            <li class="card">Alpha</li>
+            <li class="card">Bravo</li>
+            <li class="card">Charlie</li>
+          </ul>
+        </section>
+      </div>
+
+      <p class="hint">
+        Drag between <em>To do</em> and <em>Done</em>. In the third list: focus an item, press
+        <code>Space</code>, move with <code>↑</code>/<code>↓</code>, drop with <code>Space</code>.
+      </p>
+      <p class="hint" id="status">Waiting for your first drop…</p>
+    </main>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
