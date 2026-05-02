@@ -1,0 +1,46 @@
+name: 💡 Feature request
+description: Suggest an idea or improvement
+labels: [enhancement]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for the idea! Please describe the problem first — solutions are easier to weigh with the use case in view.
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem are you trying to solve?
+      description: The use case behind the request.
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed solution
+      description: What would the API look like? A code sketch is perfect.
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Workarounds you've tried, or prior art in other libraries (SortableJS, dnd-kit, …).
+    validations:
+      required: false
+
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which package(s)?
+      multiple: true
+      options:
+        - '@anil-labs/dnd-core'
+        - '@anil-labs/dnd-react'
+        - '@anil-labs/dnd-vue'
+        - '@anil-labs/dnd-svelte'
+        - '@anil-labs/dnd-solid'
+        - '@anil-labs/dnd-element'
+    validations:
+      required: false
