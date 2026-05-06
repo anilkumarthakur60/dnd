@@ -5,5 +5,8 @@ coverage/
 *.log
 .DS_Store
 .vite/
+**/.vitepress/cache/
+**/.vitepress/dist/
+*.tsbuildinfo
 .vercel/
 .vercel
