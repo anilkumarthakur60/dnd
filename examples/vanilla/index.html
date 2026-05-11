@@ -3,48 +3,292 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@anil-labs/dnd — Vanilla example</title>
+    <title>@anil-labs/dnd — Vanilla feature gallery</title>
   </head>
   <body>
     <main>
       <div class="hero">
-        <span class="badge">Vanilla JS</span>
+        <span class="badge">Vanilla JS · createSortable()</span>
         <h1>@anil-labs/dnd</h1>
-        <p class="tag">createSortable() on plain DOM — no framework, no dependencies.</p>
+        <p class="tag">
+          Every feature, one page. Each card is a self-contained example — find the one that matches
+          your use case.
+        </p>
+        <nav class="toc">
+          <a href="#basic">Sorting</a>
+          <a href="#groups">Groups</a>
+          <a href="#clone">Clone</a>
+          <a href="#handle">Handle &amp; filter</a>
+          <a href="#multi">Multi-drag</a>
+          <a href="#swap">Swap grid</a>
+          <a href="#keyboard">Keyboard</a>
+          <a href="#ghost">Custom ghost</a>
+          <a href="#spill">Spill to delete</a>
+          <a href="#api">API &amp; events</a>
+        </nav>
       </div>
 
-      <div class="board">
-        <section class="col">
-          <h2>To do</h2>
-          <ul class="list" id="todo">
+      <!-- 1 · Basic sorting -->
+      <section class="section" id="basic">
+        <div class="section-head">
+          <h2><span class="n">01</span> Sortable list</h2>
+          <p class="desc">
+            The fundamentals: drag to reorder, with a FLIP animation on every move.
+          </p>
+          <p class="use">
+            <b>Use it for</b> to-do lists, playlists, priority ordering — any single reorderable
+            list.
+          </p>
+        </div>
+        <div class="card-wrap">
+          <ul class="list" id="basic-list">
             <li class="card">Design the landing page</li>
             <li class="card">Wire up authentication</li>
-            <li class="card">Write API docs</li>
-            <li class="card">Fix mobile nav</li>
+            <li class="card">Write the API docs</li>
+            <li class="card">Fix the mobile nav</li>
+            <li class="card">Add a dark theme</li>
           </ul>
-        </section>
-        <section class="col">
-          <h2>Done</h2>
-          <ul class="list" id="done">
-            <li class="card">Set up CI</li>
-            <li class="card">Ship v0.1</li>
+        </div>
+      </section>
+
+      <!-- 2 · Groups -->
+      <section class="section" id="groups">
+        <div class="section-head">
+          <h2><span class="n">02</span> Shared lists (groups)</h2>
+          <p class="desc">
+            Give lists the same <code>group</code> and items drag freely between them.
+          </p>
+          <p class="use">
+            <b>Use it for</b> Kanban boards, assigning items to buckets, inbox → done flows.
+          </p>
+        </div>
+        <div class="card-wrap">
+          <div class="board">
+            <div class="col">
+              <h3>Backlog</h3>
+              <ul class="list" id="kanban-backlog">
+                <li class="card">Research competitors</li>
+                <li class="card">Draft the spec</li>
+                <li class="card">Book the venue</li>
+              </ul>
+            </div>
+            <div class="col">
+              <h3>In progress</h3>
+              <ul class="list" id="kanban-doing">
+                <li class="card">Build the prototype</li>
+              </ul>
+            </div>
+            <div class="col">
+              <h3>Done</h3>
+              <ul class="list" id="kanban-done">
+                <li class="card">Kick-off meeting</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 3 · Clone -->
+      <section class="section" id="clone">
+        <div class="section-head">
+          <h2><span class="n">03</span> Clone (palette → canvas)</h2>
+          <p class="desc">
+            With <code>pull: 'clone'</code> the palette copies items out and keeps the originals.
+          </p>
+          <p class="use">
+            <b>Use it for</b> form / page builders, component palettes, dragging tools onto a
+            canvas.
+          </p>
+        </div>
+        <div class="card-wrap">
+          <div class="board">
+            <div class="col">
+              <h3>Palette (copies out)</h3>
+              <ul class="list" id="clone-palette">
+                <li class="card pill">Heading</li>
+                <li class="card pill">Paragraph</li>
+                <li class="card pill">Image</li>
+                <li class="card pill">Button</li>
+              </ul>
+            </div>
+            <div class="col">
+              <h3>Canvas (drop here)</h3>
+              <ul class="list canvas" id="clone-canvas"></ul>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 4 · Handle & filter -->
+      <section class="section" id="handle">
+        <div class="section-head">
+          <h2><span class="n">04</span> Handle &amp; filter</h2>
+          <p class="desc">
+            <code>handle</code> starts a drag only from the grip; <code>draggable</code> marks
+            locked rows as non-draggable.
+          </p>
+          <p class="use">
+            <b>Use it for</b> rows with buttons/inputs, pinned items, content that must stay
+            selectable.
+          </p>
+        </div>
+        <div class="card-wrap">
+          <ul class="list" id="handle-list">
+            <li class="card"><span class="grip">⋮⋮</span> Drag me by the grip</li>
+            <li class="card"><span class="grip">⋮⋮</span> Text stays selectable</li>
+            <li class="locked">
+              <div class="card">
+                🔒 Locked — can't move<span class="muted">draggable filter</span>
+              </div>
+            </li>
+            <li class="card"><span class="grip">⋮⋮</span> Grips beat accidental drags</li>
           </ul>
-        </section>
-        <section class="col">
-          <h2>Keyboard (focus + Space)</h2>
-          <ul class="list" id="keys">
+        </div>
+      </section>
+
+      <!-- 5 · Multi-drag -->
+      <section class="section" id="multi">
+        <div class="section-head">
+          <h2><span class="n">05</span> Multi-drag</h2>
+          <p class="desc">
+            Ctrl/Cmd-click to select several items, then drag them together as one batch.
+          </p>
+          <p class="use">
+            <b>Use it for</b> file managers, bulk-move UIs, selecting multiple rows to reorder at
+            once.
+          </p>
+        </div>
+        <div class="card-wrap">
+          <ul class="list" id="multi-list">
+            <li class="card">report-q3.pdf</li>
+            <li class="card">photo-01.jpg</li>
+            <li class="card">notes.md</li>
+            <li class="card">budget.xlsx</li>
+            <li class="card">deck.key</li>
+          </ul>
+          <p class="use" id="multi-status">
+            Ctrl/Cmd-click a few files, then drag any selected one.
+          </p>
+        </div>
+      </section>
+
+      <!-- 6 · Swap grid -->
+      <section class="section" id="swap">
+        <div class="section-head">
+          <h2><span class="n">06</span> Swap mode (grid)</h2>
+          <p class="desc">
+            <code>swap: true</code> exchanges two items instead of inserting — perfect for 2-D
+            grids.
+          </p>
+          <p class="use">
+            <b>Use it for</b> dashboards, image galleries, seating charts, any tile board.
+          </p>
+        </div>
+        <div class="card-wrap">
+          <div class="grid-board" id="swap-grid"></div>
+        </div>
+      </section>
+
+      <!-- 7 · Keyboard -->
+      <section class="section" id="keyboard">
+        <div class="section-head">
+          <h2><span class="n">07</span> Keyboard &amp; accessibility</h2>
+          <p class="desc">
+            Focus an item, <kbd>Space</kbd> to grab, <kbd>↑</kbd>/<kbd>↓</kbd> to move,
+            <kbd>Space</kbd> to drop, <kbd>Esc</kbd> to cancel — with screen-reader announcements.
+          </p>
+          <p class="use">
+            <b>Use it for</b> anything that must be usable without a mouse (i.e. everything).
+          </p>
+        </div>
+        <div class="card-wrap">
+          <ul class="list" id="keyboard-list">
+            <li class="card">1 · Preheat oven</li>
+            <li class="card">2 · Mix the batter</li>
+            <li class="card">3 · Pour into tin</li>
+            <li class="card">4 · Bake 30 min</li>
+          </ul>
+          <p class="use" id="keyboard-status">Tab to an item to begin.</p>
+        </div>
+      </section>
+
+      <!-- 8 · Custom ghost -->
+      <section class="section" id="ghost">
+        <div class="section-head">
+          <h2><span class="n">08</span> Custom drag preview</h2>
+          <p class="desc">
+            <code>ghostFactory</code> replaces the cloned element with any HTML you build.
+          </p>
+          <p class="use">
+            <b>Use it for</b> compact drag pills, "N items" badges, branded drag previews.
+          </p>
+        </div>
+        <div class="card-wrap">
+          <ul class="list" id="ghost-list">
+            <li class="card">🎧 Headphones</li>
+            <li class="card">⌨️ Keyboard</li>
+            <li class="card">🖱️ Mouse</li>
+            <li class="card">🖥️ Monitor</li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- 9 · Spill to delete -->
+      <section class="section" id="spill">
+        <div class="section-head">
+          <h2><span class="n">09</span> Spill to delete</h2>
+          <p class="desc">
+            <code>removeOnSpill: true</code> deletes an item dropped outside the list. (<code
+              >revertOnSpill</code
+            >
+            animates it home instead.)
+          </p>
+          <p class="use"><b>Use it for</b> drag-off-to-remove, trash zones, dismissible chips.</p>
+        </div>
+        <div class="card-wrap">
+          <ul class="list" id="spill-list">
+            <li class="card">Newsletter subscription</li>
+            <li class="card">Unused API key</li>
+            <li class="card">Old draft</li>
+            <li class="card">Expired coupon</li>
+          </ul>
+          <div class="trash">🗑️ Drag an item off the list to delete it</div>
+        </div>
+      </section>
+
+      <!-- 10 · Programmatic API & events -->
+      <section class="section" id="api">
+        <div class="section-head">
+          <h2><span class="n">10</span> Programmatic API &amp; live events</h2>
+          <p class="desc">
+            Drive the list from code — <code>move</code>, <code>insertAt</code>,
+            <code>removeAt</code>
+            — and watch every event fire in real time.
+          </p>
+          <p class="use">
+            <b>Use it for</b> undo/redo, "add row" buttons, syncing order to a server.
+          </p>
+        </div>
+        <div class="card-wrap">
+          <div class="toolbar">
+            <button id="api-add">+ Add item</button>
+            <button id="api-move">Move first → last</button>
+            <button id="api-remove">Remove last</button>
+            <button id="api-shuffle">Shuffle</button>
+          </div>
+          <ul class="list" id="api-list">
             <li class="card">Alpha</li>
             <li class="card">Bravo</li>
             <li class="card">Charlie</li>
           </ul>
-        </section>
-      </div>
+          <div class="log" id="api-log"></div>
+        </div>
+      </section>
 
-      <p class="hint">
-        Drag between <em>To do</em> and <em>Done</em>. In the third list: focus an item, press
-        <code>Space</code>, move with <code>↑</code>/<code>↓</code>, drop with <code>Space</code>.
-      </p>
-      <p class="hint" id="status">Waiting for your first drop…</p>
+      <footer>
+        Every card runs the same zero-dependency <code>@anil-labs/dnd-core</code> engine.
+        <a href="https://github.com/anilkumarthakur60/vue-dnd">View source on GitHub</a>
+      </footer>
     </main>
     <script type="module" src="/src/main.ts"></script>
   </body>
