@@ -3,9 +3,13 @@ import { ref } from 'vue'
 import { Draggable } from '../../lib'
 
 const items = ref([
-  { id: 1, label: 'First' },
-  { id: 2, label: 'Second' },
-  { id: 3, label: 'Third' },
+  { id: 1, label: 'First item' },
+  { id: 2, label: 'Second item' },
+  { id: 3, label: 'Third item' },
+  { id: 4, label: 'Fourth item' },
+  { id: 5, label: 'Fifth item' },
+  { id: 6, label: 'Sixth item' },
+  { id: 7, label: 'Seventh item' },
 ])
 
 let seq = 100

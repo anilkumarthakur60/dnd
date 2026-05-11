@@ -251,7 +251,7 @@ html, body { overscroll-behavior-y: none; }
 
 .sidebar nav a {
   display: block;
-  padding: 10px 12px;
+  padding: 7px 10px;
   border-radius: 6px;
   color: var(--text);
   text-decoration: none;
@@ -392,6 +392,7 @@ button.btn:hover { background: var(--border); }
   :root { --sidebar-w: 220px; }
   .content { padding: 20px 22px; }
   .topbar { padding: 16px 22px; }
+  .demo-grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; }
 }
 
 /* === Mobile === */
@@ -413,37 +414,79 @@ button.btn:hover { background: var(--border); }
     transition: transform 0.22s ease;
     z-index: 50;
     box-shadow: 8px 0 24px rgba(0, 0, 0, 0.4);
+    padding: 14px 10px;
   }
   .sidebar.open { transform: translateX(0); }
-
+  .sidebar nav a { font-size: 13.5px; padding: 9px 12px; }
   .sidebar-head .close { display: block; }
 
   .topbar {
-    padding: 14px 18px 14px 64px;
+    padding: 10px 14px 10px 60px;
+    min-height: 52px;
+    display: flex;
+    align-items: center;
   }
-
-  .topbar h2 { font-size: 17px; }
+  .topbar h2 { font-size: 16px; }
 
   .content {
-    padding: 18px 16px 32px;
+    padding: 12px 12px 32px;
   }
 
   .demo-grid {
     grid-template-columns: 1fr;
-    gap: 14px;
+    gap: 10px;
+    margin-bottom: 12px;
   }
 
-  .demo-card { padding: 12px; }
-  .demo-item { padding: 12px; min-height: 44px; }
-  .demo-desc { font-size: 13px; }
-  .demo-state { font-size: 11px; padding: 10px; }
-  button.btn { min-height: 40px; padding: 8px 16px; }
+  .demo-desc {
+    font-size: 13px;
+    margin: 0 0 10px;
+  }
+
+  .demo-card {
+    padding: 10px;
+    border-radius: 8px;
+  }
+
+  .demo-card h3 {
+    font-size: 11px;
+    margin-bottom: 8px;
+  }
+
+  .demo-list { gap: 4px; }
+
+  .demo-item {
+    padding: 8px 10px;
+    min-height: 40px;
+    font-size: 13px;
+    border-radius: 6px;
+  }
+
+  .demo-state {
+    font-size: 11px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    max-height: 200px;
+    overflow: auto;
+  }
+
+  button.btn {
+    min-height: 38px;
+    padding: 8px 14px;
+    font-size: 12.5px;
+  }
+
+  .kbd { font-size: 10.5px; padding: 1px 5px; }
 }
 
 /* === Small phones === */
 @media (max-width: 420px) {
-  .topbar h2 { font-size: 16px; }
-  .content { padding: 14px 12px 28px; }
-  .demo-card { padding: 10px; border-radius: 8px; }
+  .topbar { padding: 10px 12px 10px 58px; }
+  .topbar h2 { font-size: 15px; }
+  .content { padding: 10px 10px 28px; }
+  .demo-card { padding: 8px; }
+  .demo-item { padding: 7px 9px; font-size: 12.5px; min-height: 38px; }
+  .demo-desc { font-size: 12.5px; line-height: 1.45; }
+  .demo-state { font-size: 10.5px; padding: 8px; }
 }
 </style>

@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { Draggable } from '../../lib'
 
 const items = ref(
-  Array.from({ length: 8 }, (_, i) => ({ id: i + 1, label: `File-${String(i + 1).padStart(2, '0')}.txt` })),
+  Array.from({ length: 18 }, (_, i) => ({ id: i + 1, label: `File-${String(i + 1).padStart(2, '0')}.txt` })),
 )
 
 const selected = ref<number[]>([])

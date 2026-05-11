@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { Draggable } from '../../lib'
 
 const items = ref(
-  Array.from({ length: 8 }, (_, i) => ({ id: i + 1, label: `Card ${i + 1}` })),
+  Array.from({ length: 16 }, (_, i) => ({ id: i + 1, label: `Card ${i + 1}` })),
 )
 
 function shuffle() {

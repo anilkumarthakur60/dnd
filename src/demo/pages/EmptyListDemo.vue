@@ -3,9 +3,16 @@ import { ref } from 'vue'
 import { Draggable } from '../../lib'
 
 const a = ref([
-  { id: 1, t: 'Document A' },
-  { id: 2, t: 'Document B' },
-  { id: 3, t: 'Document C' },
+  { id: 1, t: 'Q1 plan.pdf' },
+  { id: 2, t: 'Brand guide.fig' },
+  { id: 3, t: 'Roadmap.xlsx' },
+  { id: 4, t: 'Postmortem.md' },
+  { id: 5, t: 'Architecture.png' },
+  { id: 6, t: 'Onboarding.pdf' },
+  { id: 7, t: 'API reference.html' },
+  { id: 8, t: 'Vendor list.csv' },
+  { id: 9, t: 'Security policy.md' },
+  { id: 10, t: 'Hiring rubric.pdf' },
 ])
 const b = ref<Array<{ id: number; t: string }>>([])
 </script>

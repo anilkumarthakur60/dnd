@@ -3,13 +3,21 @@ import { ref, computed } from 'vue'
 import { Draggable } from '../../lib'
 
 const a = ref([
-  { id: 1, t: 'Refactor auth' },
-  { id: 2, t: 'Profile redesign' },
-  { id: 3, t: 'Migrate Postgres' },
+  { id: 1, t: 'Refactor auth middleware' },
+  { id: 2, t: 'Profile page redesign' },
+  { id: 3, t: 'Migrate Postgres to v16' },
+  { id: 4, t: 'Spec out billing v3' },
+  { id: 5, t: 'Audit dependency tree' },
+  { id: 6, t: 'Investigate latency spike' },
+  { id: 7, t: 'Improve search ranking' },
+  { id: 8, t: 'Rewrite onboarding flow' },
 ])
 const b = ref([
-  { id: 4, t: 'Ship beta' },
-  { id: 5, t: 'Resolve flaky test' },
+  { id: 9, t: 'Ship beta to power users' },
+  { id: 10, t: 'Resolve flaky CI test' },
+  { id: 11, t: 'Profile memory hotspot' },
+  { id: 12, t: 'Pair on auth rollout' },
+  { id: 13, t: 'Draft Q2 roadmap' },
 ])
 
 const aCount = computed(() => a.value.length)

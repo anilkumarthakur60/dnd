@@ -8,6 +8,11 @@ const items = ref([
   { id: 3, label: 'الثالث' },
   { id: 4, label: 'الرابع' },
   { id: 5, label: 'الخامس' },
+  { id: 6, label: 'السادس' },
+  { id: 7, label: 'السابع' },
+  { id: 8, label: 'الثامن' },
+  { id: 9, label: 'التاسع' },
+  { id: 10, label: 'العاشر' },
 ])
 </script>
 
@@ -36,6 +41,8 @@ const items = ref([
   display: flex;
   gap: 8px;
   direction: rtl;
+  overflow-x: auto;
+  padding-bottom: 4px;
 }
 .rtl-item {
   background: var(--surface-2);

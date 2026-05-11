@@ -5,7 +5,12 @@ import { Draggable } from '../../lib'
 const items = ref([
   { id: 1, text: 'Buy groceries' },
   { id: 2, text: 'Walk the dog' },
-  { id: 3, text: 'Write the report' },
+  { id: 3, text: 'Write the weekly report' },
+  { id: 4, text: 'Renew car insurance' },
+  { id: 5, text: 'Pay credit card bill' },
+  { id: 6, text: 'Pick up dry cleaning' },
+  { id: 7, text: 'Schedule dentist appointment' },
+  { id: 8, text: 'Order new running shoes' },
 ])
 
 const newText = ref('')
