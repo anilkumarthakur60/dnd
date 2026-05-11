@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref([
   { id: 1, name: 'General settings' },
@@ -16,12 +17,17 @@ const items = ref([
   { id: 11, name: 'Appearance' },
   { id: 12, name: 'Data export' },
 ])
+
+const reset = makeReset(items)
 </script>
 
 <template>
   <p class="demo-desc">
     Drag only works from the <span class="handle-grip">⋮⋮</span> grip. Use <code>handle</code> prop with a CSS selector.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>List</h3>

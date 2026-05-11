@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const a = ref([
   { id: 1, t: 'Refactor auth middleware' },
@@ -22,12 +23,17 @@ const b = ref([
 
 const aCount = computed(() => a.value.length)
 const bCount = computed(() => b.value.length)
+
+const reset = makeReset(a, b)
 </script>
 
 <template>
   <p class="demo-desc">
     Two lists, each with its own <code>#header</code>. They share a group so items can move between them — and counts update live.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <Draggable v-model="a" group="cross" item-key="id" :animation="200" class="demo-list">

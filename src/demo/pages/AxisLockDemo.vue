@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const yItems = ref(
   Array.from({ length: 10 }, (_, i) => ({ id: i + 1, label: `Y-locked row ${i + 1}` })),
@@ -15,12 +16,17 @@ const xItems = ref([
   { id: 'f', label: 'Sat' },
   { id: 'g', label: 'Sun' },
 ])
+
+const reset = makeReset(yItems, xItems)
 </script>
 
 <template>
   <p class="demo-desc">
     The ghost is constrained to a single axis. Useful for kanban columns (vertical) or timelines (horizontal).
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>axis="y"</h3>

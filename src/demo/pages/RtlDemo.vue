@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref([
   { id: 1, label: 'الأول' },
@@ -14,6 +15,8 @@ const items = ref([
   { id: 9, label: 'التاسع' },
   { id: 10, label: 'العاشر' },
 ])
+
+const reset = makeReset(items)
 </script>
 
 <template>
@@ -21,6 +24,9 @@ const items = ref([
     Horizontal list rendered right-to-left. Setting <code>rtl</code> (or putting <code>dir="rtl"</code> on the container)
     flips the drag-to-reorder direction so insertion follows the visual order.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-card" dir="rtl">
     <Draggable
       v-model="items"

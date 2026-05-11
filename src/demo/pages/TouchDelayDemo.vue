@@ -1,10 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref(
   Array.from({ length: 12 }, (_, i) => ({ id: i + 1, label: `Item ${i + 1}` })),
 )
+
+const reset = makeReset(items)
 </script>
 
 <template>
@@ -12,6 +15,9 @@ const items = ref(
     On a touch device, long-press for ~200ms to start a drag. A quick swipe still scrolls the page.
     On desktop (mouse), drag works instantly.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>Long-press to drag (touch only)</h3>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref([
   { id: 1, label: 'First item' },
@@ -19,6 +20,12 @@ function addItem() {
 function removeAt(i: number) {
   items.value = items.value.filter((_, idx) => idx !== i)
 }
+
+const baseReset = makeReset(items)
+function reset() {
+  seq = 100
+  baseReset()
+}
 </script>
 
 <template>
@@ -26,8 +33,9 @@ function removeAt(i: number) {
     Set <code>transition-name="list"</code> to opt into Vue's TransitionGroup. Items animate in when added and out when removed.
     Reorder still uses FLIP.
   </p>
-  <div style="margin-bottom: 14px">
+  <div class="demo-toolbar">
     <button class="btn" @click="addItem">Add item</button>
+    <button class="btn reset" @click="reset">↺ Reset</button>
   </div>
   <div class="demo-card">
     <Draggable

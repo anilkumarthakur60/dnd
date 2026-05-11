@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
 import type { GhostFactoryInfo } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 interface User {
   id: number
@@ -38,6 +39,8 @@ function makeGhost(info: GhostFactoryInfo<User>): HTMLElement {
   el.textContent = `${u.name} • ${u.role}`
   return el
 }
+
+const reset = makeReset(users)
 </script>
 
 <template>
@@ -45,6 +48,9 @@ function makeGhost(info: GhostFactoryInfo<User>): HTMLElement {
     The ghost (the floating element that follows the cursor) is fully customizable via <code>:ghost-factory</code>.
     Here we render a colorful pill instead of cloning the row.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>Team roster</h3>

@@ -2,6 +2,7 @@
 import { ref, useTemplateRef } from 'vue'
 import { Draggable } from '../../lib'
 import type { DraggableExpose } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 interface Row {
   id: number
@@ -43,6 +44,13 @@ function selectAll() {
 function getSelectionLog() {
   alert(`Selection indices: [${dnd.value?.getSelection().join(', ')}]`)
 }
+
+const baseReset = makeReset(items)
+function reset() {
+  next = 100
+  baseReset()
+  dnd.value?.clearSelection()
+}
 </script>
 
 <template>
@@ -50,13 +58,14 @@ function getSelectionLog() {
     The component exposes <code>move</code>, <code>insertAt</code>, <code>removeAt</code>,
     <code>select</code>, <code>clearSelection</code>, and <code>getSelection</code> via a template ref.
   </p>
-  <div style="margin-bottom: 14px; display: flex; gap: 8px; flex-wrap: wrap">
+  <div class="demo-toolbar">
     <button class="btn" @click="add">Insert at end</button>
     <button class="btn" @click="removeFirst">Remove first</button>
     <button class="btn" @click="shuffleViaApi">Shuffle (programmatic)</button>
     <button class="btn" @click="selectAll">Select all</button>
     <button class="btn" @click="dnd?.clearSelection()">Clear selection</button>
     <button class="btn" @click="getSelectionLog">Read selection</button>
+    <button class="btn reset" @click="reset">↺ Reset</button>
   </div>
   <div class="demo-card">
     <Draggable

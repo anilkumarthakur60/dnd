@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref([
   { id: 1, name: 'Apple' },
@@ -22,10 +23,15 @@ const items = ref([
   { id: 17, name: 'Strawberry' },
   { id: 18, name: 'Tangerine' },
 ])
+
+const reset = makeReset(items)
 </script>
 
 <template>
   <p class="demo-desc">Drag any item to reorder. List is animated via FLIP.</p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>List</h3>

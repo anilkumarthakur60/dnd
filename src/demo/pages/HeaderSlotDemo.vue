@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const items = ref([
   { id: 1, label: 'Read pull request feedback' },
@@ -17,12 +18,17 @@ const items = ref([
 ])
 
 const count = computed(() => items.value.length)
+
+const reset = makeReset(items)
 </script>
 
 <template>
   <p class="demo-desc">
     A <code>#header</code> slot lives above the items inside the same container. It isn't draggable.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <Draggable v-model="items" item-key="id" :animation="200" class="demo-list">

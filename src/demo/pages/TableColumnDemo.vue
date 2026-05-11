@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, computed } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 interface Column {
   key: 'name' | 'role' | 'team' | 'joined' | 'location' | 'status'
@@ -30,12 +31,17 @@ const data = ref([
 ])
 
 const orderedKeys = computed(() => columns.value.map((c) => c.key))
+
+const reset = makeReset(columns)
 </script>
 
 <template>
   <p class="demo-desc">
     Drag column headers to reorder. The body cells follow the column order driven by the same array.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-card" style="overflow-x: auto">
     <table class="demo-table">
       <thead>

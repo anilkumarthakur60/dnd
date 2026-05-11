@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const a = ref([
   { id: 1, t: 'Q1 plan.pdf' },
@@ -15,6 +16,8 @@ const a = ref([
   { id: 10, t: 'Hiring rubric.pdf' },
 ])
 const b = ref<Array<{ id: number; t: string }>>([])
+
+const reset = makeReset(a, b)
 </script>
 
 <template>
@@ -22,6 +25,9 @@ const b = ref<Array<{ id: number; t: string }>>([])
     The empty list on the right uses <code>:empty-insert-threshold="40"</code> — drops register
     even when the cursor is 40px outside its bounds, making it forgiving for short lists.
   </p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-grid">
     <div class="demo-card">
       <h3>Source</h3>

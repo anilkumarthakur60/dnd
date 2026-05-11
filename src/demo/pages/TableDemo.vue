@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Draggable } from '../../lib'
+import { makeReset } from '../composables/useReset'
 
 const rows = ref([
   { id: 1, country: 'France', capital: 'Paris', pop: 67 },
@@ -19,10 +20,15 @@ const rows = ref([
   { id: 14, country: 'Iceland', capital: 'Reykjavík', pop: 0.4 },
   { id: 15, country: 'Vietnam', capital: 'Hanoi', pop: 98 },
 ])
+
+const reset = makeReset(rows)
 </script>
 
 <template>
   <p class="demo-desc">Drag any row by grabbing it. The component renders a <code>&lt;tbody&gt;</code> with <code>tag="tbody" item-tag="tr"</code>.</p>
+  <div class="demo-toolbar">
+    <button class="btn reset" @click="reset">↺ Reset</button>
+  </div>
   <div class="demo-card" style="overflow-x: auto">
     <table class="demo-table">
       <thead>
