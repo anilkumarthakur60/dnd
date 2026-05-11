@@ -1,0 +1,57 @@
+{
+  "name": "vue-dnd",
+  "version": "0.1.0",
+  "description": "Zero-dependency Vue 3 drag-and-drop. Lists, tables, nested, clone, handle, animated transitions — all from scratch on Pointer Events.",
+  "type": "module",
+  "license": "MIT",
+  "keywords": [
+    "vue",
+    "vue3",
+    "draggable",
+    "drag-and-drop",
+    "dnd",
+    "sortable",
+    "list",
+    "nested",
+    "table",
+    "typescript"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "main": "./dist/vue-dnd.umd.cjs",
+  "module": "./dist/vue-dnd.js",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/vue-dnd.js",
+      "require": "./dist/vue-dnd.umd.cjs"
+    },
+    "./style.css": "./dist/vue-dnd.css"
+  },
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "build:demo": "vue-tsc -b && vite build --mode demo",
+    "preview": "vite preview",
+    "typecheck": "vue-tsc --noEmit -p tsconfig.app.json"
+  },
+  "peerDependencies": {
+    "vue": "^3.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.12.3",
+    "@vitejs/plugin-vue": "^6.0.6",
+    "@vue/tsconfig": "^0.9.1",
+    "typescript": "~6.0.2",
+    "vite": "^8.0.12",
+    "vite-plugin-dts": "^4.5.4",
+    "vue": "^3.5.34",
+    "vue-tsc": "^3.2.8"
+  }
+}
