@@ -7,7 +7,7 @@ export function snapshot(elements: HTMLElement[]): Snapshot[] {
   return elements.map((el) => ({ el, rect: el.getBoundingClientRect() }))
 }
 
-export function play(prev: Snapshot[], durationMs: number, easing = 'cubic-bezier(0.2, 0, 0, 1)') {
+export function play(prev: Snapshot[], durationMs: number, easing: string = 'cubic-bezier(0.2, 0, 0, 1)') {
   if (durationMs <= 0) return
   for (const { el, rect: oldRect } of prev) {
     if (!el.isConnected) continue

@@ -14,6 +14,8 @@ export interface RegisteredList {
   listRef: () => unknown[]
   applyChange: (change: ApplyChange) => void
   itemAt: (index: number) => unknown
+  emptyInsertThreshold: () => number
+  rtl: () => boolean
 }
 
 let _id = 0
@@ -40,6 +42,18 @@ export function listsUnderPoint(x: number, y: number): RegisteredList[] {
         seen.add(entry)
         matches.push(entry)
       }
+    }
+  }
+  // Extend with empty lists whose bounds (inflated by emptyInsertThreshold) contain the point.
+  for (const entry of registry) {
+    if (seen.has(entry)) continue
+    const threshold = entry.emptyInsertThreshold()
+    if (threshold <= 0) continue
+    if (entry.getItems().length > 0) continue
+    const r = entry.el.getBoundingClientRect()
+    if (x >= r.left - threshold && x <= r.right + threshold && y >= r.top - threshold && y <= r.bottom + threshold) {
+      seen.add(entry)
+      matches.push(entry)
     }
   }
   return matches

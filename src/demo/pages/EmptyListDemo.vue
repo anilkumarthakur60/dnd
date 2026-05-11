@@ -1,0 +1,51 @@
+<script setup lang="ts">
+import { ref } from 'vue'
+import { Draggable } from '../../lib'
+
+const a = ref([
+  { id: 1, t: 'Document A' },
+  { id: 2, t: 'Document B' },
+  { id: 3, t: 'Document C' },
+])
+const b = ref<Array<{ id: number; t: string }>>([])
+</script>
+
+<template>
+  <p class="demo-desc">
+    The empty list on the right uses <code>:empty-insert-threshold="40"</code> — drops register
+    even when the cursor is 40px outside its bounds, making it forgiving for short lists.
+  </p>
+  <div class="demo-grid">
+    <div class="demo-card">
+      <h3>Source</h3>
+      <Draggable v-model="a" group="docs" item-key="id" :animation="200" class="demo-list">
+        <template #item="{ element }">
+          <div class="demo-item">{{ element.t }}</div>
+        </template>
+      </Draggable>
+    </div>
+    <div class="demo-card">
+      <h3>Target (empty)</h3>
+      <Draggable
+        v-model="b"
+        group="docs"
+        item-key="id"
+        :animation="200"
+        :empty-insert-threshold="40"
+        class="demo-list empty-zone"
+      >
+        <template #item="{ element }">
+          <div class="demo-item">{{ element.t }}</div>
+        </template>
+      </Draggable>
+    </div>
+  </div>
+</template>
+
+<style scoped>
+.empty-zone {
+  min-height: 80px;
+  border: 2px dashed var(--border);
+  border-radius: 8px;
+}
+</style>
