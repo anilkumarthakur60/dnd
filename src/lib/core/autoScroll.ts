@@ -1,8 +1,14 @@
-const SCROLL_EDGE = 48
-const MAX_SPEED = 18
+interface Config {
+  disabled: boolean
+  sensitivity: number
+  speed: number
+}
+
+const DEFAULTS: Config = { disabled: false, sensitivity: 48, speed: 18 }
 
 let raf = 0
 let active: { x: number; y: number } | null = null
+let cfg: Config = { ...DEFAULTS }
 
 function findScrollable(el: HTMLElement | null): HTMLElement | null {
   let cur: HTMLElement | null = el
@@ -22,16 +28,21 @@ function findScrollable(el: HTMLElement | null): HTMLElement | null {
 
 function tick() {
   if (!active) return
+  if (cfg.disabled) {
+    raf = requestAnimationFrame(tick)
+    return
+  }
   const { x, y } = active
-
+  const edge = cfg.sensitivity
+  const max = cfg.speed
   const innerH = window.innerHeight
   const innerW = window.innerWidth
   let dy = 0
   let dx = 0
-  if (y < SCROLL_EDGE) dy = -((SCROLL_EDGE - y) / SCROLL_EDGE) * MAX_SPEED
-  else if (innerH - y < SCROLL_EDGE) dy = ((SCROLL_EDGE - (innerH - y)) / SCROLL_EDGE) * MAX_SPEED
-  if (x < SCROLL_EDGE) dx = -((SCROLL_EDGE - x) / SCROLL_EDGE) * MAX_SPEED
-  else if (innerW - x < SCROLL_EDGE) dx = ((SCROLL_EDGE - (innerW - x)) / SCROLL_EDGE) * MAX_SPEED
+  if (y < edge) dy = -((edge - y) / edge) * max
+  else if (innerH - y < edge) dy = ((edge - (innerH - y)) / edge) * max
+  if (x < edge) dx = -((edge - x) / edge) * max
+  else if (innerW - x < edge) dx = ((edge - (innerW - x)) / edge) * max
 
   if (dy || dx) window.scrollBy(dx, dy)
 
@@ -41,17 +52,18 @@ function tick() {
     const rect = scroller.getBoundingClientRect()
     let sdx = 0
     let sdy = 0
-    if (y - rect.top < SCROLL_EDGE) sdy = -((SCROLL_EDGE - (y - rect.top)) / SCROLL_EDGE) * MAX_SPEED
-    else if (rect.bottom - y < SCROLL_EDGE) sdy = ((SCROLL_EDGE - (rect.bottom - y)) / SCROLL_EDGE) * MAX_SPEED
-    if (x - rect.left < SCROLL_EDGE) sdx = -((SCROLL_EDGE - (x - rect.left)) / SCROLL_EDGE) * MAX_SPEED
-    else if (rect.right - x < SCROLL_EDGE) sdx = ((SCROLL_EDGE - (rect.right - x)) / SCROLL_EDGE) * MAX_SPEED
+    if (y - rect.top < edge) sdy = -((edge - (y - rect.top)) / edge) * max
+    else if (rect.bottom - y < edge) sdy = ((edge - (rect.bottom - y)) / edge) * max
+    if (x - rect.left < edge) sdx = -((edge - (x - rect.left)) / edge) * max
+    else if (rect.right - x < edge) sdx = ((edge - (rect.right - x)) / edge) * max
     if (sdx || sdy) scroller.scrollBy(sdx, sdy)
   }
 
   raf = requestAnimationFrame(tick)
 }
 
-export function startAutoScroll(x: number, y: number) {
+export function startAutoScroll(x: number, y: number, config?: Partial<Config>) {
+  cfg = { ...DEFAULTS, ...config }
   active = { x, y }
   if (!raf) raf = requestAnimationFrame(tick)
 }
