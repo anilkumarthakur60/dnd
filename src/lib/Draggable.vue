@@ -1,4 +1,5 @@
 <script setup lang="ts" generic="T">
+defineOptions({ inheritAttrs: false })
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import type { Ref } from 'vue'
 import type {
@@ -569,44 +570,44 @@ defineExpose({
 </script>
 
 <template>
-  <div class="vue-dnd-wrap">
+  <component
+    :is="transitionName ? 'TransitionGroup' : tag"
+    v-bind="{ ...(transitionName ? { tag, name: transitionName } : {}), ...$attrs }"
+    ref="containerRef"
+    class="vue-dnd-container"
+    @pointerdown="onPointerDown"
+  >
+    <template v-if="!transitionName">
+      <slot name="header" />
+    </template>
     <component
-      :is="transitionName ? 'TransitionGroup' : tag"
-      v-bind="transitionName ? { tag, name: transitionName } : {}"
-      ref="containerRef"
-      class="vue-dnd-container"
-      @pointerdown="onPointerDown"
+      v-for="(item, index) in internal"
+      :is="itemTag"
+      :key="resolveKey(item, index)"
+      :data-vue-dnd-index="index"
+      :class="itemClass(index)"
+      :tabindex="keyboard && !disabled ? 0 : -1"
+      :aria-grabbed="keyboard && keyboardActiveIndex === index ? 'true' : undefined"
+      :aria-posinset="index + 1"
+      :aria-setsize="internal.length"
+      :role="keyboard ? 'option' : undefined"
+      @click="onItemClick($event, index)"
+      @keydown="onItemKeyDown($event, index)"
     >
-      <template v-if="!transitionName">
-        <slot name="header" />
-      </template>
-      <component
-        v-for="(item, index) in internal"
-        :is="itemTag"
-        :key="resolveKey(item, index)"
-        :data-vue-dnd-index="index"
-        :class="itemClass(index)"
-        :tabindex="keyboard && !disabled ? 0 : -1"
-        :aria-grabbed="keyboard && keyboardActiveIndex === index ? 'true' : undefined"
-        :aria-posinset="index + 1"
-        :aria-setsize="internal.length"
-        :role="keyboard ? 'option' : undefined"
-        @click="onItemClick($event, index)"
-        @keydown="onItemKeyDown($event, index)"
-      >
-        <slot name="item" :element="item" :index="index" :selected="isSelected(index)">
-          {{ item }}
-        </slot>
-      </component>
-      <template v-if="!transitionName">
-        <slot name="footer" />
-      </template>
+      <slot name="item" :element="item" :index="index" :selected="isSelected(index)">
+        {{ item }}
+      </slot>
     </component>
+    <template v-if="!transitionName">
+      <slot name="footer" />
+    </template>
+  </component>
+  <Teleport to="body">
     <div
       ref="liveRef"
       class="vue-dnd-live"
       aria-live="polite"
       aria-atomic="true"
     />
-  </div>
+  </Teleport>
 </template>
