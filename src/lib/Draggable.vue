@@ -1,5 +1,4 @@
 <script setup lang="ts" generic="T">
-defineOptions({ inheritAttrs: false })
 import { ref, computed, watch, onMounted, onBeforeUnmount, nextTick } from 'vue'
 import type { Ref } from 'vue'
 import type {
@@ -16,6 +15,9 @@ import type {
 import { register, unregister, normalizeGroup } from './core/registry'
 import type { RegisteredList, ApplyChange } from './core/registry'
 import { beginDrag, isDragging } from './core/dragController'
+import type { MoveInfo, EndInfo } from './core/dragController'
+
+defineOptions({ inheritAttrs: false })
 
 const props = withDefaults(
   defineProps<{
@@ -203,7 +205,7 @@ onMounted(() => {
     getItems: getItemElements,
     listRef: () => internal.value as unknown[],
     applyChange,
-    itemAt: (i) => internal.value[i],
+    itemAt: (i: number) => internal.value[i],
     emptyInsertThreshold: () => props.emptyInsertThreshold ?? 0,
     rtl: isRtl,
   })
@@ -390,7 +392,7 @@ function actuallyBeginDrag(e: PointerEvent, found: { el: HTMLElement; index: num
     revertOnSpill: props.revertOnSpill,
     removeOnSpill: props.removeOnSpill,
     revertClone: props.revertClone,
-    cloneFn: props.clone ? (it) => props.clone!(it as T) : undefined,
+    cloneFn: props.clone ? (it: unknown) => props.clone!(it as T) : undefined,
     ghostFactory: props.ghostFactory as GhostFactory | undefined,
     ghostClass: props.ghostClass,
     chosenClass: props.chosenClass,
@@ -400,7 +402,7 @@ function actuallyBeginDrag(e: PointerEvent, found: { el: HTMLElement; index: num
       speed: props.scrollSpeed,
       sensitivity: props.scrollSensitivity,
     },
-    onStart: (origEvent) => {
+    onStart: (origEvent: PointerEvent) => {
       emit('start', {
         item,
         index: oldIndex,
@@ -409,7 +411,7 @@ function actuallyBeginDrag(e: PointerEvent, found: { el: HTMLElement; index: num
         originalEvent: origEvent,
       })
     },
-    onMove: (info) => {
+    onMove: (info: MoveInfo) => {
       emit('move', {
         item,
         fromList: internal.value,
@@ -422,7 +424,7 @@ function actuallyBeginDrag(e: PointerEvent, found: { el: HTMLElement; index: num
         originalEvent: info.pointerEvent,
       })
     },
-    onEnd: (info) => {
+    onEnd: (info: EndInfo) => {
       emit('unchoose', { item, index: oldIndex })
       const toListItems = (info.toList?.listRef() as T[] | undefined) ?? internal.value
       emit('end', {
