@@ -17,7 +17,7 @@ export default defineConfig(({ mode }) => {
               outDir: 'dist',
               entryRoot: 'src/lib',
               insertTypesEntry: true,
-              cleanVueFileName: false,
+              cleanVueFileName: true,
             }),
           ]
         : []),
@@ -32,6 +32,7 @@ export default defineConfig(({ mode }) => {
             formats: ['es', 'umd'],
           },
           cssCodeSplit: false,
+          copyPublicDir: false,
           rollupOptions: {
             external: ['vue'],
             output: {
