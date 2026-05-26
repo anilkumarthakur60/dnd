@@ -1,5 +1,6 @@
 :root {
   color-scheme: dark;
+  --dnd-accent: #7dabff;
 }
 * {
   box-sizing: border-box;
@@ -13,17 +14,20 @@ body {
     'Segoe UI',
     Roboto,
     sans-serif;
-  background: radial-gradient(1200px 600px at 50% -10%, #23233a 0%, #131318 55%);
+  background: radial-gradient(1200px 600px at 50% -10%, #23233a 0%, #131318 55%) no-repeat;
+  background-attachment: fixed;
   color: #ececf1;
-  padding: 32px 20px 64px;
+  padding: 32px 20px 96px;
 }
 main {
-  max-width: 900px;
+  max-width: 960px;
   margin: 0 auto;
 }
+
+/* ── Hero ─────────────────────────────────────────────────────────── */
 .hero {
   text-align: center;
-  margin-bottom: 8px;
+  margin-bottom: 12px;
 }
 .badge {
   display: inline-block;
@@ -36,32 +40,92 @@ main {
   margin-bottom: 10px;
 }
 h1 {
-  font-size: clamp(24px, 5vw, 36px);
+  font-size: clamp(26px, 5vw, 38px);
   margin: 0 0 8px;
   letter-spacing: -0.02em;
 }
 .tag {
   color: #9a9aa8;
+  margin: 0 auto;
+  max-width: 560px;
+  line-height: 1.5;
+}
+.toc {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+  margin: 24px auto 8px;
+  max-width: 760px;
+}
+.toc a {
+  font-size: 13px;
+  color: #b7b7c4;
+  text-decoration: none;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+}
+.toc a:hover {
+  border-color: #7dabff;
+  color: #fff;
+}
+
+/* ── Section cards ────────────────────────────────────────────────── */
+.section {
+  margin-top: 40px;
+  scroll-margin-top: 20px;
+}
+.section-head {
+  margin-bottom: 14px;
+}
+.section-head h2 {
+  font-size: 19px;
+  margin: 0 0 4px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+}
+.section-head h2 .n {
+  font-size: 13px;
+  color: #7dabff;
+  font-variant-numeric: tabular-nums;
+}
+.desc {
   margin: 0;
+  color: #b7b7c4;
+  font-size: 14px;
+  line-height: 1.55;
 }
-.board {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-  gap: 16px;
-  margin-top: 28px;
+.use {
+  margin: 6px 0 0;
+  font-size: 13px;
+  color: #8a8a97;
 }
-.col {
-  background: rgba(255, 255, 255, 0.04);
+.use b {
+  color: #cfcfe0;
+  font-weight: 600;
+}
+.card-wrap {
+  background: rgba(255, 255, 255, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
-  padding: 14px;
+  padding: 16px;
 }
-.col h2 {
-  font-size: 13px;
+
+/* ── Lists ────────────────────────────────────────────────────────── */
+.board {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 14px;
+}
+.col h3 {
+  font-size: 12px;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: #9a9aa8;
-  margin: 4px 4px 12px;
+  margin: 2px 4px 10px;
 }
 .list {
   list-style: none;
@@ -70,13 +134,13 @@ h1 {
   display: flex;
   flex-direction: column;
   gap: 8px;
-  min-height: 60px;
+  min-height: 56px;
 }
 .card {
-  padding: 12px 14px;
+  padding: 11px 13px;
   border-radius: 10px;
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.09);
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -87,17 +151,150 @@ h1 {
 }
 .grip {
   cursor: grab;
-  color: #9a9aa8;
+  color: #8a8a97;
+  user-select: none;
+  font-size: 15px;
+}
+.muted {
+  color: #8a8a97;
+  font-size: 12px;
+  margin-left: auto;
+}
+.locked {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.locked .card {
+  border-style: dashed;
+}
+
+/* ── Palette / canvas (clone) ─────────────────────────────────────── */
+.pill {
+  padding: 9px 12px;
+  border-radius: 999px;
+  background: rgba(125, 171, 255, 0.12);
+  border: 1px solid rgba(125, 171, 255, 0.35);
+  color: #cfe0ff;
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+.canvas {
+  min-height: 120px;
+  border-radius: 10px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.15);
+  padding: 10px;
+}
+.canvas .card {
+  background: rgba(125, 171, 255, 0.1);
+}
+
+/* ── 2D grid (swap) ───────────────────────────────────────────────── */
+.grid-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+}
+.tile {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 12px;
+  display: grid;
+  place-items: center;
+  font-size: 22px;
+  font-weight: 700;
+  color: #0b0f17;
+  cursor: grab;
   user-select: none;
 }
+
+/* ── Buttons ──────────────────────────────────────────────────────── */
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+button {
+  font: inherit;
+  font-size: 13px;
+  padding: 7px 13px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(255, 255, 255, 0.06);
+  color: #ececf1;
+  cursor: pointer;
+}
+button:hover {
+  border-color: #7dabff;
+  background: rgba(125, 171, 255, 0.12);
+}
+
+/* ── Event log ────────────────────────────────────────────────────── */
+.log {
+  margin-top: 12px;
+  height: 132px;
+  overflow-y: auto;
+  border-radius: 10px;
+  background: rgba(0, 0, 0, 0.28);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 10px 12px;
+  font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+  font-size: 12px;
+  line-height: 1.7;
+  color: #a9c7a9;
+}
+.log .row {
+  white-space: nowrap;
+}
+.log .k {
+  color: #7dabff;
+}
+.log .empty {
+  color: #6a6a75;
+}
+
+/* ── Trash (spill) ────────────────────────────────────────────────── */
+.trash {
+  margin-top: 12px;
+  padding: 14px;
+  text-align: center;
+  border-radius: 10px;
+  border: 1.5px dashed rgba(255, 120, 120, 0.4);
+  color: #e39a9a;
+  font-size: 13px;
+}
+
+/* ── Hints ────────────────────────────────────────────────────────── */
 .hint {
   color: #75757f;
   font-size: 13px;
-  margin-top: 24px;
+  margin: 24px 0 0;
   text-align: center;
 }
-.hint code {
-  background: rgba(255, 255, 255, 0.07);
-  padding: 2px 7px;
-  border-radius: 6px;
+code {
+  background: rgba(255, 255, 255, 0.08);
+  padding: 2px 6px;
+  border-radius: 5px;
+  font-size: 0.92em;
+}
+kbd {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-bottom-width: 2px;
+  border-radius: 5px;
+  padding: 1px 6px;
+  font-size: 12px;
+  font-family: ui-monospace, Menlo, monospace;
+}
+footer {
+  margin-top: 56px;
+  text-align: center;
+  color: #75757f;
+  font-size: 13px;
+}
+footer a {
+  color: #7dabff;
+  text-decoration: none;
 }
