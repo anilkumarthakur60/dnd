@@ -1,7 +1,7 @@
 # Vue 3
 
 ```sh
-npm install @anil-labs/dnd-vue
+npm install @anil-labs/dnd
 ```
 
 ## `<Draggable>`
@@ -11,7 +11,7 @@ npm install @anil-labs/dnd-vue
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Draggable } from '@anil-labs/dnd-vue'
+import { Draggable } from '@anil-labs/dnd'
 import '@anil-labs/dnd-core/styles.css'
 
 const items = ref([
@@ -64,7 +64,7 @@ Everything from the [options reference](/reference/options) as props, plus:
 ```vue
 <script setup lang="ts">
 import { useTemplateRef } from 'vue'
-import type { DraggableExpose } from '@anil-labs/dnd-vue'
+import type { DraggableExpose } from '@anil-labs/dnd'
 
 const dnd = useTemplateRef<DraggableExpose<Task>>('dnd')
 dnd.value?.insertAt(0, { id: 99, text: 'Top' })
@@ -84,7 +84,7 @@ You render, the engine drags. Items must be keyed direct children with `data-dnd
 ```vue
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useDraggable } from '@anil-labs/dnd-vue'
+import { useDraggable } from '@anil-labs/dnd'
 
 const items = ref([{ id: 1, text: 'Apple' }])
 const { containerRef, selection, keyboardIndex } = useDraggable(items, () => ({
@@ -106,6 +106,6 @@ The options getter is reactive — return different options and the engine updat
 ## Global registration
 
 ```ts
-import { DndPlugin } from '@anil-labs/dnd-vue'
+import { DndPlugin } from '@anil-labs/dnd'
 app.use(DndPlugin) // registers <Draggable> globally
 ```

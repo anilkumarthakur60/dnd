@@ -11,7 +11,7 @@ npm install @anil-labs/dnd-react
 ```
 
 ```sh [Vue]
-npm install @anil-labs/dnd-vue
+npm install @anil-labs/dnd
 ```
 
 ```sh [Svelte]
@@ -71,7 +71,7 @@ export function TaskList() {
 ```vue [Vue]
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Draggable } from '@anil-labs/dnd-vue'
+import { Draggable } from '@anil-labs/dnd'
 import '@anil-labs/dnd-core/styles.css'
 
 const items = ref([

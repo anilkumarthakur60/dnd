@@ -90,7 +90,7 @@ The rendered items must be direct children of the container carrying `data-dnd-i
 | --- | --- |
 | `@anil-labs/dnd-core` | `createSortable`, `DndList`, `applyListChange`, utilities, all types, `./styles.css`. |
 | `@anil-labs/dnd-react` | `Draggable`, `useDraggable`, `DraggableHandle`, re-exports core. |
-| `@anil-labs/dnd-vue` | `Draggable`, `useDraggable`, `DndPlugin`, `DraggableExpose`, re-exports core. |
+| `@anil-labs/dnd` | `Draggable`, `useDraggable`, `DndPlugin`, `DraggableExpose`, re-exports core. |
 | `@anil-labs/dnd-svelte` | `draggable` action, re-exports core. |
 | `@anil-labs/dnd-solid` | `createDraggable`, re-exports core. |
 | `@anil-labs/dnd-element` | `<dnd-list>` (self-registering), `DndListElement`, `register(tag)`, re-exports core. |

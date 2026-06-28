@@ -38,7 +38,7 @@ body:
       options:
         - '@anil-labs/dnd-core'
         - '@anil-labs/dnd-react'
-        - '@anil-labs/dnd-vue'
+        - '@anil-labs/dnd'
         - '@anil-labs/dnd-svelte'
         - '@anil-labs/dnd-solid'
         - '@anil-labs/dnd-element'
