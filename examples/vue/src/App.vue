@@ -2,6 +2,8 @@
 import { ref, useTemplateRef } from 'vue'
 import { Draggable } from '@anil-labs/dnd'
 import type { DraggableExpose, GhostFactoryInfo } from '@anil-labs/dnd'
+import TreeNode from './TreeNode.vue'
+import type { TreeItem } from './TreeNode.vue'
 
 interface Item {
   id: number
@@ -23,6 +25,7 @@ const SECTIONS: [string, string][] = [
   ['keyboard', 'Keyboard'],
   ['ghost', 'Custom ghost'],
   ['spill', 'Spill to delete'],
+  ['nested', 'Nested lists'],
   ['api', 'API & events'],
 ]
 
@@ -71,6 +74,32 @@ const ghost = ({ sourceEl, count }: GhostFactoryInfo<Item>): HTMLElement => {
 }
 
 const spill = ref(make('Newsletter subscription', 'Unused API key', 'Old draft', 'Expired coupon'))
+
+let treeUid = 0
+const nextTreeId = () => ++treeUid
+const tree = ref<TreeItem[]>([
+  {
+    id: nextTreeId(),
+    label: 'src/',
+    children: [
+      {
+        id: nextTreeId(),
+        label: 'components/',
+        children: [
+          { id: nextTreeId(), label: 'Button.vue', children: [] },
+          { id: nextTreeId(), label: 'Modal.vue', children: [] },
+        ],
+      },
+      { id: nextTreeId(), label: 'index.ts', children: [] },
+    ],
+  },
+  {
+    id: nextTreeId(),
+    label: 'tests/',
+    children: [{ id: nextTreeId(), label: 'app.spec.ts', children: [] }],
+  },
+  { id: nextTreeId(), label: 'package.json', children: [] },
+])
 
 const api = ref(make('Alpha', 'Bravo', 'Charlie'))
 const log = ref<{ k: string; d: string }[]>([])
@@ -427,10 +456,25 @@ const shuffle = () => {
       </div>
     </section>
 
-    <!-- 10 · API & events -->
+    <!-- 10 · Nested lists -->
+    <section class="section" id="nested">
+      <div class="section-head">
+        <h2><span class="n">10</span> Nested lists (trees)</h2>
+        <p class="desc">
+          Trees are just lists inside list items. Give every level the same
+          <code>group</code> and items drag freely between branches and depths.
+        </p>
+        <p class="use"><b>Use it for</b> file trees, comment threads, org charts.</p>
+      </div>
+      <div class="card-wrap">
+        <TreeNode :items="tree" @update:items="(v) => (tree = v)" />
+      </div>
+    </section>
+
+    <!-- 11 · API & events -->
     <section class="section" id="api">
       <div class="section-head">
-        <h2><span class="n">10</span> Programmatic API &amp; live events</h2>
+        <h2><span class="n">11</span> Programmatic API &amp; live events</h2>
         <p class="desc">
           Drive the list from code — <code>move</code>, <code>insertAt</code>,
           <code>removeAt</code> — and watch events fire.

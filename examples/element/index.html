@@ -24,6 +24,7 @@
           <a href="#keyboard">Keyboard</a>
           <a href="#ghost">Custom ghost</a>
           <a href="#spill">Spill to delete</a>
+          <a href="#nested">Nested lists</a>
           <a href="#api">API &amp; events</a>
         </nav>
       </div>
@@ -237,10 +238,29 @@
         </div>
       </section>
 
-      <!-- 10 · API & events -->
+      <!-- 10 · Nested lists -->
+      <section class="section" id="nested">
+        <div class="section-head">
+          <h2><span class="n">10</span> Nested lists (trees)</h2>
+          <p class="desc">
+            Trees are just lists inside list items — recurse a <code>&lt;dnd-list&gt;</code> inside
+            each <code>&lt;li&gt;</code> and give every level the same <code>group</code>
+            attribute so items drag freely between branches and depths.
+          </p>
+          <p class="use"><b>Use it for</b> file trees, comment threads, org charts.</p>
+        </div>
+        <div class="card-wrap">
+          <div id="tree-root"></div>
+          <p class="use" id="tree-status">
+            Drag any row into another branch — the JS tree model stays in sync.
+          </p>
+        </div>
+      </section>
+
+      <!-- 11 · API & events -->
       <section class="section" id="api">
         <div class="section-head">
-          <h2><span class="n">10</span> Programmatic API &amp; live events</h2>
+          <h2><span class="n">11</span> Programmatic API &amp; live events</h2>
           <p class="desc">
             Reach the engine via <code>el.sortable.list</code>; every event re-dispatches as a
             <code>dnd-*</code> CustomEvent.

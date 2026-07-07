@@ -62,7 +62,81 @@ list('ghost-list').options = {
 // 9 · Spill to delete
 list('spill-list').options = { removeOnSpill: true }
 
-// 10 · Programmatic API & live events
+// 10 · Nested lists (trees)
+interface TreeItem {
+  id: number
+  label: string
+  children: TreeItem[]
+}
+
+let treeUid = 0
+const nextTreeId = (): number => ++treeUid
+const leaf = (label: string): TreeItem => ({ id: nextTreeId(), label, children: [] })
+const branch = (label: string, children: TreeItem[]): TreeItem => ({
+  id: nextTreeId(),
+  label,
+  children,
+})
+
+// The DOM is the source of truth while dragging; `tree` is rebuilt from it
+// on every `dnd-change` so a plain JS model always mirrors what's on screen.
+let tree: TreeItem[] = [
+  branch('src/', [branch('components/', [leaf('Button.ts'), leaf('Modal.ts')]), leaf('index.ts')]),
+  branch('tests/', [leaf('app.spec.ts')]),
+  leaf('package.json'),
+]
+
+// Every level — including nested ones — shares the same `group`, so the
+// engine (not this demo) handles cross-branch moves and cycle prevention.
+const treeList = (items: TreeItem[]): DndListElement => {
+  const listEl = document.createElement('dnd-list') as DndListElement
+  listEl.className = 'tree-list'
+  listEl.setAttribute('group', 'tree')
+  listEl.setAttribute('animation', '200')
+  listEl.setAttribute('empty-insert-threshold', '14')
+  items.forEach((item) => listEl.appendChild(treeNode(item)))
+  return listEl
+}
+
+const treeNode = (item: TreeItem): HTMLLIElement => {
+  const li = document.createElement('li')
+  li.className = 'tree-node'
+  li.dataset.treeId = String(item.id)
+
+  const row = document.createElement('div')
+  row.className = 'tree-row'
+  row.innerHTML = `<span class="grip">⠿</span><span class="tree-label">${item.label}</span>`
+
+  li.appendChild(row)
+  if (item.label.endsWith('/')) li.appendChild(treeList(item.children))
+  return li
+}
+
+// Walk the live DOM back into plain data — the inverse of treeList/treeNode.
+const readTree = (listEl: Element): TreeItem[] =>
+  Array.from(listEl.children).map((child) => {
+    const li = child as HTMLLIElement
+    const label = li.querySelector('.tree-label')?.textContent ?? ''
+    const nested = li.querySelector(':scope > dnd-list')
+    return { id: Number(li.dataset.treeId), label, children: nested ? readTree(nested) : [] }
+  })
+
+const countNodes = (items: TreeItem[]): number =>
+  items.reduce((sum, item) => sum + 1 + countNodes(item.children), 0)
+
+const treeRoot = treeList(tree)
+el('tree-root').appendChild(treeRoot)
+
+const treeStatus = el('tree-status')
+// `dnd-change` bubbles from every nested <dnd-list>, so one listener on the
+// root is enough to catch reorders, cross-branch moves, and drops at any depth.
+treeRoot.addEventListener('dnd-change', () => {
+  tree = readTree(treeRoot)
+  const total = countNodes(tree)
+  treeStatus.textContent = `Synced — ${total} node${total === 1 ? '' : 's'} across ${tree.length} top-level branch${tree.length === 1 ? '' : 'es'}.`
+})
+
+// 11 · Programmatic API & live events
 const apiEl = list('api-list')
 const log = el('api-log')
 let counter = 0

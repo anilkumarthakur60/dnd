@@ -1,6 +1,8 @@
 <script lang="ts">
   import { draggable } from '@anil-labs/dnd-svelte'
   import type { GhostFactoryInfo } from '@anil-labs/dnd-svelte'
+  import TreeNode from './TreeNode.svelte'
+  import type { TreeItem } from './TreeNode.svelte'
 
   interface Item {
     id: number
@@ -22,6 +24,7 @@
     ['keyboard', 'Keyboard'],
     ['ghost', 'Custom ghost'],
     ['spill', 'Spill to delete'],
+    ['nested', 'Nested lists'],
     ['api', 'API & events'],
   ]
 
@@ -73,6 +76,32 @@
   let spill = $state(
     make('Newsletter subscription', 'Unused API key', 'Old draft', 'Expired coupon'),
   )
+
+  let treeUid = 0
+  const nextTreeId = () => ++treeUid
+  let tree = $state<TreeItem[]>([
+    {
+      id: nextTreeId(),
+      label: 'src/',
+      children: [
+        {
+          id: nextTreeId(),
+          label: 'components/',
+          children: [
+            { id: nextTreeId(), label: 'Button.svelte', children: [] },
+            { id: nextTreeId(), label: 'Modal.svelte', children: [] },
+          ],
+        },
+        { id: nextTreeId(), label: 'index.ts', children: [] },
+      ],
+    },
+    {
+      id: nextTreeId(),
+      label: 'tests/',
+      children: [{ id: nextTreeId(), label: 'app.spec.ts', children: [] }],
+    },
+    { id: nextTreeId(), label: 'package.json', children: [] },
+  ])
 
   let api = $state(make('Alpha', 'Bravo', 'Charlie'))
   let log = $state<{ k: string; d: string }[]>([])
@@ -439,10 +468,25 @@
     </div>
   </section>
 
-  <!-- 10 · API & events -->
+  <!-- 10 · Nested lists -->
+  <section class="section" id="nested">
+    <div class="section-head">
+      <h2><span class="n">10</span> Nested lists (trees)</h2>
+      <p class="desc">
+        Trees are just lists inside list items. Give every level the same <code>group</code> and items
+        drag freely between branches and depths.
+      </p>
+      <p class="use"><b>Use it for</b> file trees, comment threads, org charts.</p>
+    </div>
+    <div class="card-wrap">
+      <TreeNode items={tree} onItemsChange={(v) => (tree = v)} />
+    </div>
+  </section>
+
+  <!-- 11 · API & events -->
   <section class="section" id="api">
     <div class="section-head">
-      <h2><span class="n">10</span> Reactive API &amp; live events</h2>
+      <h2><span class="n">11</span> Reactive API &amp; live events</h2>
       <p class="desc">
         Reorder the array directly (the Svelte way); drag events stream in through the action's
         callbacks.
