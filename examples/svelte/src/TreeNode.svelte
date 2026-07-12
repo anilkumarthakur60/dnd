@@ -19,6 +19,7 @@
 
 <ul
   class="tree-list"
+  class:tree-list--empty={items.length === 0}
   use:draggable={{
     items,
     onItemsChange,

@@ -348,7 +348,7 @@ function TreeNode({
       emptyInsertThreshold={14}
       tag="ul"
       itemTag="li"
-      className="tree-list"
+      className={items.length === 0 ? 'tree-list tree-list--empty' : 'tree-list'}
       renderItem={({ item, index }) => (
         <div className="tree-node">
           <div className="tree-row">

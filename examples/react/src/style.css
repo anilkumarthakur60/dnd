@@ -200,6 +200,20 @@ h1 {
   gap: 6px;
   min-height: 16px;
 }
+.tree-list--empty {
+  min-height: 34px;
+  border-radius: 8px;
+  border: 1.5px dashed rgba(255, 255, 255, 0.16);
+  background: rgba(0, 0, 0, 0.15);
+}
+.tree-list--empty::before {
+  content: 'Drop here';
+  display: block;
+  padding: 8px 11px;
+  color: #8a8a97;
+  font-size: 12px;
+  font-style: italic;
+}
 .tree-node {
   display: flex;
   flex-direction: column;

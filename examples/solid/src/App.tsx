@@ -325,7 +325,11 @@ function TreeNode(props: { items: TreeItem[]; onItemsChange: (items: TreeItem[])
     emptyInsertThreshold: 14,
   })
   return (
-    <ul class="tree-list" ref={dnd.ref}>
+    <ul
+      class="tree-list"
+      classList={{ 'tree-list--empty': props.items.length === 0 }}
+      ref={dnd.ref}
+    >
       <For each={props.items}>
         {(item, i) => (
           <li {...dnd.itemProps(i())}>

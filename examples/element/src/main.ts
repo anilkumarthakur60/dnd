@@ -124,14 +124,24 @@ const readTree = (listEl: Element): TreeItem[] =>
 const countNodes = (items: TreeItem[]): number =>
   items.reduce((sum, item) => sum + 1 + countNodes(item.children), 0)
 
+// A folder emptied by dragging its last child out still needs a visible
+// "drop here" target, not just invisible blank space.
+const updateEmptyMarkers = (root: Element): void => {
+  root.querySelectorAll('dnd-list').forEach((listEl) => {
+    listEl.classList.toggle('tree-list--empty', listEl.children.length === 0)
+  })
+}
+
 const treeRoot = treeList(tree)
 el('tree-root').appendChild(treeRoot)
+updateEmptyMarkers(treeRoot)
 
 const treeStatus = el('tree-status')
 // `dnd-change` bubbles from every nested <dnd-list>, so one listener on the
 // root is enough to catch reorders, cross-branch moves, and drops at any depth.
 treeRoot.addEventListener('dnd-change', () => {
   tree = readTree(treeRoot)
+  updateEmptyMarkers(treeRoot)
   const total = countNodes(tree)
   treeStatus.textContent = `Synced — ${total} node${total === 1 ? '' : 's'} across ${tree.length} top-level branch${tree.length === 1 ? '' : 'es'}.`
 })

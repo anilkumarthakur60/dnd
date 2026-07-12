@@ -20,7 +20,7 @@ const emit = defineEmits<{ 'update:items': [TreeItem[]] }>()
     :empty-insert-threshold="14"
     tag="ul"
     item-tag="li"
-    class="tree-list"
+    :class="['tree-list', { 'tree-list--empty': items.length === 0 }]"
     @update:model-value="(v) => emit('update:items', v as TreeItem[])"
   >
     <template #item="{ element }">

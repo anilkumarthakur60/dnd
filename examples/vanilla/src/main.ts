@@ -121,6 +121,14 @@ const treeData: TreeItem[] = [
 
 const treeStatus = $('tree-status')
 
+// A folder emptied by dragging its last child out still needs a visible
+// "drop here" target, not just invisible blank space.
+function updateTreeEmptyMarkers(): void {
+  $('tree-root')
+    .querySelectorAll<HTMLUListElement>('ul.tree-list')
+    .forEach((ul) => ul.classList.toggle('tree-list--empty', ul.children.length === 0))
+}
+
 // Every level — however deep — is its own `createSortable` instance sharing
 // the same `group`, so items drag freely between branches and depths. The
 // engine itself refuses to drop a branch inside its own descendants and
@@ -137,6 +145,7 @@ function buildTreeList(items: TreeItem[]): HTMLUListElement {
       if (cancelled) return
       const label = item.querySelector('.tree-label')?.textContent ?? 'item'
       treeStatus.textContent = `Moved "${label}" — its whole branch moved with it.`
+      updateTreeEmptyMarkers()
     },
   })
   return ul
@@ -162,6 +171,7 @@ function buildTreeNode(item: TreeItem): HTMLLIElement {
 }
 
 $('tree-root').appendChild(buildTreeList(treeData))
+updateTreeEmptyMarkers()
 
 // 11 · Programmatic API & live events
 const apiList = $('api-list')
