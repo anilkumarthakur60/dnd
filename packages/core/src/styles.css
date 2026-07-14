@@ -1,0 +1,83 @@
+/* @anil-labs/dnd-core — minimal structural styles.
+   Theme via CSS custom properties: set `--dnd-accent` on any ancestor. */
+
+.dnd-container {
+  position: relative;
+}
+
+.dnd-item {
+  cursor: grab;
+  touch-action: none;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.dnd-item:active {
+  cursor: grabbing;
+}
+
+.dnd-item:focus-visible {
+  outline: 2px solid var(--dnd-accent, #6ea8ff);
+  outline-offset: 2px;
+}
+
+/* The source item(s) left behind while a drag is in flight. */
+.dnd-placeholder {
+  opacity: 0.35;
+  filter: saturate(0.4);
+}
+
+/* The floating drag preview that follows the pointer. */
+.dnd-ghost {
+  pointer-events: none;
+  will-change: transform;
+}
+
+/* Batch-size badge on the default multi-drag ghost. */
+.dnd-count-badge {
+  position: absolute;
+  top: -8px;
+  right: -8px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 6px;
+  border-radius: 999px;
+  background: var(--dnd-accent, #6ea8ff);
+  color: #0b0f17;
+  font-size: 11px;
+  font-weight: 700;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.25);
+}
+
+/* Items in the multi-drag selection. */
+.dnd-selected {
+  outline: 2px solid var(--dnd-accent, #6ea8ff);
+  outline-offset: -2px;
+}
+
+/* The item currently "held" in keyboard mode. */
+.dnd-keyboard-active {
+  outline: 2px dashed var(--dnd-accent, #6ea8ff);
+  outline-offset: -2px;
+}
+
+/* Visually-hidden aria-live region for keyboard announcements. */
+.dnd-live {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dnd-ghost {
+    transition: none !important;
+  }
+}
