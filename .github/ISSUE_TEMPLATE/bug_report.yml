@@ -1,0 +1,68 @@
+name: 🐛 Bug report
+description: Report something that isn't working as expected
+labels: [bug]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for taking the time to file a bug! A minimal reproduction gets it fixed fastest.
+
+  - type: dropdown
+    id: package
+    attributes:
+      label: Which package?
+      options:
+        - '@anil-labs/dnd-core'
+        - '@anil-labs/dnd-react'
+        - '@anil-labs/dnd-vue'
+        - '@anil-labs/dnd-svelte'
+        - '@anil-labs/dnd-solid'
+        - '@anil-labs/dnd-element'
+        - Not sure / multiple
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: Package version
+      placeholder: e.g. 0.1.0
+    validations:
+      required: true
+
+  - type: textarea
+    id: what-happened
+    attributes:
+      label: What happened?
+      description: What did you expect, and what happened instead?
+    validations:
+      required: true
+
+  - type: input
+    id: reproduction
+    attributes:
+      label: Reproduction
+      description: A link to a minimal StackBlitz / CodeSandbox / repo. This is the single most helpful thing you can provide.
+      placeholder: https://stackblitz.com/edit/...
+    validations:
+      required: false
+
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      placeholder: |
+        1. Render two lists sharing group "tasks"
+        2. Drag an item from the first into ...
+        3. See ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser + version, OS, framework version, input device (mouse/touch/pen).
+      placeholder: |
+        Chrome 132, macOS 15, Vue 3.5, trackpad
+    validations:
+      required: false
