@@ -1,378 +1,156 @@
-# vue-dnd
+# @anil-labs/dnd
 
-Zero-dependency Vue 3 drag-and-drop. Lists, tables, nested trees, clone, handle, animated transitions — built from scratch on Pointer Events.
+[![CI](https://github.com/anilkumarthakur60/vue-dnd/actions/workflows/ci.yml/badge.svg)](https://github.com/anilkumarthakur60/vue-dnd/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/@anil-labs/dnd-core?label=dnd-core)](https://www.npmjs.com/package/@anil-labs/dnd-core)
+[![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
-- **No runtime dependencies.** Vue 3 only.
-- **One component.** `<Draggable>` is the whole API.
-- **Pointer Events** — mouse, touch, pen, and `delay` for long-press touch UX.
-- **Keyboard + ARIA** — Space-to-grab, arrow keys, `aria-live` announcements.
-- **FLIP animation** via the Web Animations API; opt-in TransitionGroup for entrance/exit.
-- **Cross-list drag** with `group`, `pull`, `put` (boolean, array, or function).
-- **Clone mode** — palette → canvas, with optional `clone(item)` transform.
-- **Multi-drag** — Ctrl/Cmd-click to select N items, drag as a batch.
-- **Swap mode** with `swapThreshold` / `invertSwap` for grid-style boards.
-- **Axis lock** — constrain to X or Y.
-- **Custom ghost** — render any HTML as the drag preview.
-- **Revert on spill** — animate ghost back when dropped outside any list.
-- **Nested / recursive** trees, any depth.
-- **Tables** — sort rows or columns natively.
-- **TypeScript** — generic over your item type, typed slot props, full `.d.ts` output.
-- **~7 KB gzipped.**
+Zero-dependency drag & drop — sortable lists, cross-list groups, clone, multi-drag, swap mode, keyboard a11y, FLIP animation and autoscroll. One engine built on Pointer Events, with first-class bindings for **React, Vue 3, Svelte, Solid and Web Components**.
 
-## Install
+- **[Documentation](https://anilkumarthakur60.github.io/vue-dnd/)**
+- **[Live demos](https://anil-labs-dnd.vercel.app)** — one per framework
 
-```sh
-npm install vue-dnd
-```
+## Packages
 
-```ts
-// main.ts
-import 'vue-dnd/style.css'
-```
+| Package | What you get |
+| --- | --- |
+| [`@anil-labs/dnd-core`](./packages/core) | The zero-dependency engine: `createSortable()` for vanilla DOM + the `DndList` controller the bindings are built on. |
+| [`@anil-labs/dnd-react`](./packages/react) | `<Draggable>` component + `useDraggable()` hook. |
+| [`@anil-labs/dnd-vue`](./packages/vue) | `<Draggable>` component (v-model) + `useDraggable()` composable. |
+| [`@anil-labs/dnd-svelte`](./packages/svelte) | The `use:draggable` action. |
+| [`@anil-labs/dnd-solid`](./packages/solid) | The `createDraggable()` primitive. |
+| [`@anil-labs/dnd-element`](./packages/element) | The `<dnd-list>` Web Component — any framework or plain HTML. |
+
+## Features
+
+- **No runtime dependencies.** Plain TypeScript on Pointer Events — mouse, touch and pen.
+- **Cross-list groups** — share a `group` to drag between lists; control transfers with `pull`/`put` booleans, allow-lists or functions.
+- **Clone mode** — palette → canvas with `pull: 'clone'` and an optional `clone(item)` transform.
+- **Multi-drag** — Ctrl/Cmd-click to select several items and drag them as a batch (count badge included).
+- **Swap mode** — exchange positions instead of inserting, for grid boards.
+- **Keyboard + ARIA** — Space to grab, arrows to move, Escape to cancel, `aria-live` announcements.
+- **FLIP animation** via the Web Animations API, honoring `prefers-reduced-motion`.
+- **Handles, filters, touch delay, axis lock, RTL, autoscroll, custom ghosts, revert/remove on spill.**
+- **Your state stays yours** — the engine never mutates your arrays; every change arrives as an event or an immutable update.
+- **Strict TypeScript** — generic over your item type, no `any` anywhere, full `.d.ts` output.
 
 ## Quick start
 
-```vue
-<script setup lang="ts">
-import { ref } from 'vue'
-import { Draggable } from 'vue-dnd'
+### React
 
-const items = ref([
-  { id: 1, name: 'Apple' },
-  { id: 2, name: 'Banana' },
-  { id: 3, name: 'Cherry' },
-])
+```tsx
+import { useState } from 'react'
+import { Draggable } from '@anil-labs/dnd-react'
+import '@anil-labs/dnd-core/styles.css'
+
+const [items, setItems] = useState([{ id: 1, text: 'Apple' }, { id: 2, text: 'Banana' }])
+
+<Draggable
+  items={items}
+  onItemsChange={setItems}
+  itemKey="id"
+  animation={200}
+  renderItem={({ item }) => <div className="card">{item.text}</div>}
+/>
+```
+
+### Vue 3
+
+```vue
+<script setup>
+import { ref } from 'vue'
+import { Draggable } from '@anil-labs/dnd-vue'
+import '@anil-labs/dnd-core/styles.css'
+
+const items = ref([{ id: 1, text: 'Apple' }, { id: 2, text: 'Banana' }])
 </script>
 
 <template>
   <Draggable v-model="items" item-key="id" :animation="200">
     <template #item="{ element }">
-      <div class="item">{{ element.name }}</div>
+      <div class="card">{{ element.text }}</div>
     </template>
   </Draggable>
 </template>
 ```
 
-## API
+### Svelte
 
-### Props
+```svelte
+<script>
+  import { draggable } from '@anil-labs/dnd-svelte'
+  import '@anil-labs/dnd-core/styles.css'
 
-| Prop          | Type                                              | Default | Description                                                              |
-| ------------- | ------------------------------------------------- | ------- | ------------------------------------------------------------------------ |
-| `modelValue`  | `T[]`                                             | —       | The list of items. Use `v-model`.                                        |
-| `group`       | `string \| DragGroupObject`                       | —       | Group name (string) or full config. Lists sharing a group share drops.   |
-| `sort`        | `boolean`                                         | `true`  | Allow reordering within this list.                                       |
-| `disabled`    | `boolean`                                         | `false` | Disable all drag interactions.                                           |
-| `animation`   | `number`                                          | `200`   | FLIP animation duration in ms. Set `0` to disable.                       |
-| `handle`      | `string`                                          | —       | CSS selector. Drag only starts on elements matching this within an item. |
-| `filter`      | `string`                                          | —       | CSS selector. Drag is blocked when the pointerdown matches.              |
-| `draggable`   | `string`                                          | —       | CSS selector items must match to be draggable.                           |
-| `tag`         | `string`                                          | `'div'` | Tag for the container (e.g. `'ul'`, `'tbody'`, `'tr'`).                  |
-| `itemTag`     | `string`                                          | `'div'` | Tag for each item wrapper (e.g. `'li'`, `'tr'`, `'th'`).                 |
-| `itemKey`     | `keyof T \| (item, i) => string \| number`        | —       | Stable key per item. Strongly recommended.                               |
-| `clone`       | `(item: T) => T`                                  | —       | Custom clone function used in `pull: 'clone'` mode.                      |
-| `ghostClass`  | `string`                                          | —       | Class added to the source item while it's being dragged.                 |
-| `chosenClass` | `string`                                          | —       | Class added to the source item on pointerdown.                           |
-| `dragClass`   | `string`                                          | —       | Class added to the floating ghost element.                               |
-| `selectedClass` | `string`                                        | `vue-dnd-selected` | Class added to items selected via multi-drag.                  |
-| `delay`       | `number`                                          | `0`     | ms to wait before drag actually starts. Use ~200 for touch UX.           |
-| `delayOnTouchOnly` | `boolean`                                    | `true`  | Apply `delay` only when `pointerType === 'touch'`.                       |
-| `touchStartThreshold` | `number`                                  | `5`     | Pixels the pointer may drift during `delay` before drag is cancelled.    |
-| `axis`        | `'x' \| 'y'`                                      | —       | Lock the ghost (and hit-testing) to one axis.                            |
-| `direction`   | `'horizontal' \| 'vertical' \| 'auto'`            | `'auto'`| Force axis interpretation instead of auto-detection.                     |
-| `easing`      | `string`                                          | `'cubic-bezier(0.2,0,0,1)'` | CSS easing used for FLIP and revert animations.       |
-| `swap`        | `boolean`                                         | `false` | Swap with the hovered item instead of inserting.                         |
-| `swapThreshold` | `number` (0..1)                                 | `1`     | How much overlap triggers a reorder/swap.                                |
-| `invertSwap`  | `boolean`                                         | `false` | Reverse the swap-zone direction.                                         |
-| `ghostFactory` | `(info) => HTMLElement`                          | —       | Build a custom drag preview instead of cloning the item.                 |
-| `revertOnSpill` | `boolean`                                       | `false` | Animate ghost back to source when dropped outside any list.              |
-| `removeOnSpill` | `boolean`                                       | `false` | Remove the item entirely when dropped outside any list.                  |
-| `revertClone` | `boolean`                                         | `false` | Animate the cloned ghost back when dropped on the source itself.         |
-| `scrollSpeed` | `number`                                          | `18`    | Autoscroll velocity (px / frame).                                        |
-| `scrollSensitivity` | `number`                                    | `48`    | Distance from edge (px) before autoscroll engages.                       |
-| `scrollDisabled` | `boolean`                                      | `false` | Disable the autoscroll loop.                                             |
-| `emptyInsertThreshold` | `number`                                 | `0`     | Px of slack around an empty list before it counts as a drop target.      |
-| `preventOnFilter` | `boolean`                                     | `true`  | preventDefault on pointerdowns matching `filter`.                        |
-| `dragMaxItems` | `number`                                         | `0`     | Cap on multi-drag batch size (0 = unlimited).                            |
-| `rtl`         | `boolean`                                         | —       | Force right-to-left horizontal logic (auto-detected from CSS otherwise). |
-| `multiDrag`   | `boolean`                                         | `false` | Enable Ctrl/Cmd/Shift-click selection + batch dragging.                  |
-| `keyboard`    | `boolean`                                         | `false` | Enable keyboard reordering + ARIA announcements.                         |
-| `ariaLabel`   | `string`                                          | —       | Name used in keyboard-mode aria-live announcements.                      |
-| `transitionName` | `string`                                       | —       | Vue TransitionGroup name. When set, items animate on add/remove.         |
-
-### Group config
-
-```ts
-type DragGroup = string | {
-  name: string
-  pull?: boolean | 'clone' | string[] | ((to, from) => boolean | 'clone')
-  put?: boolean | string[] | ((to, from) => boolean)
-}
-```
-
-- `pull: false` — items can't leave this list.
-- `pull: 'clone'` — items copy out, originals stay.
-- `pull: ['a', 'b']` — only pull into groups named `a` or `b`.
-- `put: false` — list rejects incoming items.
-
-### Events
-
-| Event              | Payload                                                                                                                       |
-| ------------------ | ----------------------------------------------------------------------------------------------------------------------------- |
-| `update:modelValue`| `(value: T[])` — emitted on every change.                                                                                      |
-| `start`            | `{ item, index, fromList, fromEl, originalEvent }`                                                                             |
-| `end`              | `{ item, oldIndex, newIndex, fromList, toList, fromEl, toEl, pullMode, cancelled, originalEvent }`                             |
-| `add`              | `{ element, newIndex }` — an item was added (incl. cross-list and clone).                                                      |
-| `remove`           | `{ element, oldIndex }` — an item was removed from this list.                                                                  |
-| `update`           | `{ element, oldIndex, newIndex }` — an item was reordered within this list.                                                    |
-| `move`             | `{ item, fromList, toList, oldIndex, newIndex, originalEvent }` — fires while dragging, on every index change.                 |
-| `change`           | `{ added? } \| { removed? } \| { moved? }` — single event covering all three categories.                                       |
-| `choose` / `unchoose` | `{ item, index }` — fire on pointerdown / pointerup, regardless of whether a drag actually happened.                       |
-
-### Slots
-
-- `#item="{ element, index, selected }"` — preferred. Renders each item. `selected` is `true` when the item is in the multi-drag selection.
-- `#header` — rendered above items, not draggable. (Disabled when `transitionName` is set.)
-- `#footer` — rendered below items, not draggable. (Disabled when `transitionName` is set.)
-
-### Keyboard interaction (when `keyboard` is true)
-
-| Key                            | Action                                           |
-| ------------------------------ | ------------------------------------------------ |
-| <kbd>Tab</kbd>                 | Focus the next item.                             |
-| <kbd>Space</kbd> / <kbd>Enter</kbd> | Pick up the focused item (or drop the held item). |
-| <kbd>↑</kbd> / <kbd>↓</kbd> / <kbd>←</kbd> / <kbd>→</kbd> | Move the held item one slot. |
-| <kbd>Home</kbd> / <kbd>End</kbd> | Move the held item to the start / end.           |
-| <kbd>Esc</kbd>                 | Cancel and restore the original position.        |
-
-## Recipes
-
-### Cross-list move
-
-```vue
-<Draggable v-model="todo" group="tasks" item-key="id">
-  <template #item="{ element }"><div>{{ element.text }}</div></template>
-</Draggable>
-
-<Draggable v-model="done" group="tasks" item-key="id">
-  <template #item="{ element }"><div>{{ element.text }}</div></template>
-</Draggable>
-```
-
-### Clone (palette → canvas)
-
-```vue
-<Draggable
-  v-model="palette"
-  :group="{ name: 'blocks', pull: 'clone', put: false }"
-  :sort="false"
-  :clone="(item) => ({ ...item, id: crypto.randomUUID() })"
-  item-key="id"
->
-  <template #item="{ element }"><div>{{ element.label }}</div></template>
-</Draggable>
-
-<Draggable v-model="canvas" group="blocks" item-key="id">
-  <template #item="{ element }"><div>{{ element.label }}</div></template>
-</Draggable>
-```
-
-### Handle
-
-```vue
-<Draggable v-model="items" handle=".grip" item-key="id">
-  <template #item="{ element }">
-    <div class="row">
-      <span class="grip">⋮⋮</span>
-      <span>{{ element.name }}</span>
-    </div>
-  </template>
-</Draggable>
-```
-
-### Table rows
-
-```vue
-<table>
-  <thead>...</thead>
-  <Draggable v-model="rows" tag="tbody" item-tag="tr" item-key="id">
-    <template #item="{ element }">
-      <td>{{ element.name }}</td>
-      <td>{{ element.email }}</td>
-    </template>
-  </Draggable>
-</table>
-```
-
-### Table columns
-
-```vue
-<thead>
-  <Draggable v-model="columns" tag="tr" item-tag="th" item-key="key">
-    <template #item="{ element }">{{ element.label }}</template>
-  </Draggable>
-</thead>
-```
-
-### Nested (recursive)
-
-```vue
-<!-- TreeNode.vue -->
-<template>
-  <Draggable
-    :model-value="items"
-    @update:model-value="(v) => items.splice(0, items.length, ...v)"
-    group="tree"
-    item-key="id"
-  >
-    <template #item="{ element }">
-      <div>
-        <div>{{ element.label }}</div>
-        <TreeNode :items="element.children" />
-      </div>
-    </template>
-  </Draggable>
-</template>
-```
-
-Share the same `group` name across every level — items drag freely between branches.
-
-### Cancel a drag
-
-Press <kbd>Esc</kbd> while dragging. Order reverts and `end` fires with `cancelled: true`.
-
-### Touch delay (long-press to drag)
-
-```vue
-<Draggable
-  v-model="items"
-  :delay="200"
-  delay-on-touch-only
-  :touch-start-threshold="6"
-  item-key="id"
->
-  ...
-</Draggable>
-```
-
-Mobile users can scroll past items with a tap-swipe; long-press starts a drag.
-
-### Multi-drag
-
-```vue
-<Draggable v-model="files" multi-drag item-key="id">
-  <template #item="{ element, selected }">
-    <div :class="{ row: true, sel: selected }">{{ element.name }}</div>
-  </template>
-</Draggable>
-```
-
-Ctrl/Cmd-click toggles selection. Dragging any selected item moves them all as a batch.
-
-### Swap mode
-
-```vue
-<Draggable v-model="tiles" swap :swap-threshold="0.7" item-key="id">
-  <template #item="{ element }"><div>{{ element.label }}</div></template>
-</Draggable>
-```
-
-Dropping on a tile swaps positions instead of inserting. Useful for grids and dashboards.
-
-### Custom ghost
-
-```vue
-<script setup>
-import type { GhostFactoryInfo } from 'vue-dnd'
-function makeGhost(info: GhostFactoryInfo) {
-  const el = document.createElement('div')
-  el.textContent = `${info.count} item${info.count > 1 ? 's' : ''}`
-  el.style.padding = '10px 16px'
-  el.style.background = '#6ea8ff'
-  el.style.borderRadius = '999px'
-  return el
-}
+  let items = $state([{ id: 1, text: 'Apple' }, { id: 2, text: 'Banana' }])
 </script>
 
-<template>
-  <Draggable v-model="items" :ghost-factory="makeGhost" item-key="id">
-    ...
-  </Draggable>
-</template>
+<ul use:draggable={{ items, onItemsChange: (v) => (items = v), animation: 200 }}>
+  {#each items as item, i (item.id)}
+    <li data-dnd-index={i} class="dnd-item">{item.text}</li>
+  {/each}
+</ul>
 ```
 
-### Revert on spill
+### Solid
 
-```vue
-<Draggable v-model="items" revert-on-spill :group="{ name: 'a', put: false }" item-key="id">
-  ...
-</Draggable>
+```tsx
+import { createSignal, For } from 'solid-js'
+import { createDraggable } from '@anil-labs/dnd-solid'
+import '@anil-labs/dnd-core/styles.css'
+
+const [items, setItems] = createSignal([{ id: 1, text: 'Apple' }, { id: 2, text: 'Banana' }])
+const dnd = createDraggable(items, setItems, { animation: 200 })
+
+<ul ref={dnd.ref}>
+  <For each={items()}>{(item, i) => <li {...dnd.itemProps(i())}>{item.text}</li>}</For>
+</ul>
 ```
 
-If a user drops outside any valid target, the ghost animates back to its starting position.
+### Web Component / plain HTML
 
-### Programmatic API
-
-Expose methods on the component via a template ref:
-
-```vue
-<script setup lang="ts">
-import { useTemplateRef } from 'vue'
-import type { DraggableExpose } from 'vue-dnd'
-
-const dnd = useTemplateRef<DraggableExpose<MyItem>>('dnd')
-
-function insertFromAbove() {
-  dnd.value?.insertAt(0, { id: crypto.randomUUID(), name: 'Top' })
-}
+```html
+<script type="module">
+  import '@anil-labs/dnd-element' // or the unpkg script tag
 </script>
 
-<template>
-  <Draggable ref="dnd" v-model="items" item-key="id"> ... </Draggable>
-</template>
+<dnd-list group="tasks" animation="200">
+  <div>Apple</div>
+  <div>Banana</div>
+</dnd-list>
 ```
 
-Exposed methods: `move(from, to)`, `insertAt(index, item)`, `removeAt(index)`, `select(indices)`, `clearSelection()`, `getSelection()`.
-
-### Headless: `useDraggable`
-
-For when you want full control over rendering:
+### Vanilla
 
 ```ts
-import { useDraggable } from 'vue-dnd'
+import { createSortable } from '@anil-labs/dnd-core'
+import '@anil-labs/dnd-core/styles.css'
 
-const { containerRef, internal, onPointerDown, move } = useDraggable<MyItem>({
-  modelValue: items,
-  onUpdate: (v) => (items.value = v),
-  group: () => 'todos',
-  animation: () => 200,
+createSortable(document.querySelector('#list'), {
+  group: 'tasks',
+  animation: 200,
+  onEnd: ({ oldIndex, newIndex }) => console.log(oldIndex, '→', newIndex),
 })
 ```
 
-Wire `containerRef` to your element and `onPointerDown` to its `pointerdown` event. Items must carry `data-vue-dnd-index` so the engine can find them.
+## Going further
 
-### Entrance / exit animation
+- **[Groups & cloning](https://anilkumarthakur60.github.io/vue-dnd/guide/groups)** — `pull`/`put` rules, one-way lanes, spill behaviour
+- **[Multi-drag](https://anilkumarthakur60.github.io/vue-dnd/guide/multi-drag)** and **[keyboard a11y](https://anilkumarthakur60.github.io/vue-dnd/guide/keyboard)**
+- **[Swap, grids & tables](https://anilkumarthakur60.github.io/vue-dnd/guide/swap-and-grids)** and **[nested trees](https://anilkumarthakur60.github.io/vue-dnd/guide/nested)**
+- **[All options](https://anilkumarthakur60.github.io/vue-dnd/reference/options)** · **[Events](https://anilkumarthakur60.github.io/vue-dnd/reference/events)** · **[API](https://anilkumarthakur60.github.io/vue-dnd/reference/api)**
 
-```vue
-<Draggable v-model="items" transition-name="list" item-key="id">
-  ...
-</Draggable>
+## Development
 
-<style>
-.list-enter-active, .list-leave-active { transition: all 0.25s ease; }
-.list-enter-from { opacity: 0; transform: translateY(-8px); }
-.list-leave-to { opacity: 0; transform: translateX(20px); }
-</style>
+This is a pnpm workspace. See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full guide.
+
+```bash
+pnpm install
+pnpm build          # all packages (ESM + CJS + IIFE + .d.ts)
+pnpm test           # vitest suites
+pnpm check          # lint + format + typecheck + test
+pnpm example:react  # run a demo app (:vue :svelte :solid :element :vanilla)
+pnpm docs:dev       # docs site
 ```
-
-When `transitionName` is set, the container is rendered as Vue's `<TransitionGroup>`. Header/footer slots are disabled in this mode.
-
-## Notes
-
-- **`v-model` is the only source of truth.** The library never mutates your array in place — every change is emitted.
-- **Touch.** Items have `touch-action: none` so the browser doesn't scroll while you drag. If you have a long list inside a scrollable container on mobile, use the `handle` prop so users can still scroll outside the grip.
-- **SSR.** The component uses Pointer Events on mount; render is identical to a plain list during SSR.
 
 ## License
 
-MIT
+[MIT](./LICENSE) © Er. Anil Kumar Thakur
