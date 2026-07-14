@@ -1,0 +1,61 @@
+{
+  "name": "@anil-labs/dnd-element",
+  "version": "0.1.0",
+  "description": "Web Component (<dnd-list>) for @anil-labs/dnd-core — sortable lists, cross-list groups, multi-drag and keyboard a11y in any framework or plain HTML via a script tag.",
+  "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "unpkg": "./dist/index.global.js",
+  "jsdelivr": "./dist/index.global.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "sideEffects": true,
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "test": "echo \"covered by @anil-labs/dnd-core\"",
+    "typecheck": "tsc --noEmit",
+    "prepack": "pnpm run build"
+  },
+  "keywords": [
+    "web-component",
+    "custom-element",
+    "drag-and-drop",
+    "dnd",
+    "sortable",
+    "draggable",
+    "list",
+    "reorder"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "license": "MIT",
+  "author": "Er. Anil Kumar Thakur <anilkumarthakur60@gmail.com>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anilkumarthakur60/vue-dnd.git",
+    "directory": "packages/element"
+  },
+  "homepage": "https://github.com/anilkumarthakur60/vue-dnd/tree/main/packages/element#readme",
+  "bugs": "https://github.com/anilkumarthakur60/vue-dnd/issues",
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "@anil-labs/dnd-core": "workspace:^"
+  },
+  "devDependencies": {
+    "tsup": "^8.3.5",
+    "typescript": "^5.7.2"
+  }
+}
