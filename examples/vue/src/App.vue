@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, useTemplateRef } from 'vue'
-import { Draggable } from '@anil-labs/dnd-vue'
-import type { DraggableExpose, GhostFactoryInfo } from '@anil-labs/dnd-vue'
+import { Draggable } from '@anil-labs/dnd'
+import type { DraggableExpose, GhostFactoryInfo } from '@anil-labs/dnd'
 
 interface Item {
   id: number

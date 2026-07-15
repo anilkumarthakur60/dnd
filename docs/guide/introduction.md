@@ -8,7 +8,7 @@ The project is a small family of packages sharing one engine:
 | --- | --- |
 | `@anil-labs/dnd-core` | The zero-dependency engine: `createSortable()` for vanilla DOM, plus the `DndList` controller and adapter contract the bindings are built on. |
 | `@anil-labs/dnd-react` | `<Draggable>` component and `useDraggable()` hook. |
-| `@anil-labs/dnd-vue` | `<Draggable>` component (v-model) and `useDraggable()` composable. |
+| `@anil-labs/dnd` | `<Draggable>` component (v-model) and `useDraggable()` composable. |
 | `@anil-labs/dnd-svelte` | The `use:draggable` action. |
 | `@anil-labs/dnd-solid` | The `createDraggable()` primitive. |
 | `@anil-labs/dnd-element` | The `<dnd-list>` Web Component — any framework or plain HTML. |

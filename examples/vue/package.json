@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@anil-labs/dnd-core": "workspace:*",
-    "@anil-labs/dnd-vue": "workspace:*",
+    "@anil-labs/dnd": "workspace:*",
     "vue": "^3.5.13"
   },
   "devDependencies": {

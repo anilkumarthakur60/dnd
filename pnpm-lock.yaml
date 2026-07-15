@@ -148,7 +148,7 @@ importers:
       '@anil-labs/dnd-core':
         specifier: workspace:*
         version: link:../../packages/core
-      '@anil-labs/dnd-vue':
+      '@anil-labs/dnd':
         specifier: workspace:*
         version: link:../../packages/vue
       vue:
