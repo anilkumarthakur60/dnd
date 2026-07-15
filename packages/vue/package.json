@@ -21,8 +21,7 @@
     "build": "tsup",
     "dev": "tsup --watch",
     "test": "vitest run",
-    "typecheck": "tsc --noEmit",
-    "prepack": "pnpm run build"
+    "typecheck": "tsc --noEmit"
   },
   "keywords": [
     "vue",
