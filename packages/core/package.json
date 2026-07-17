@@ -1,6 +1,6 @@
 {
   "name": "@anil-labs/dnd-core",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Zero-dependency drag & drop engine — sortable lists, cross-list groups, clone, multi-drag, swap mode, keyboard a11y, FLIP animation and autoscroll, built on Pointer Events.",
   "type": "module",
   "main": "./dist/index.cjs",

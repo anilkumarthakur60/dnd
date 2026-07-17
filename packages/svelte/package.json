@@ -1,6 +1,6 @@
 {
   "name": "@anil-labs/dnd-svelte",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Svelte bindings for @anil-labs/dnd-core — the use:draggable action for sortable lists, cross-list groups, multi-drag and keyboard a11y.",
   "type": "module",
   "main": "./dist/index.cjs",

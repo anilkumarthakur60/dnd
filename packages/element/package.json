@@ -1,6 +1,6 @@
 {
   "name": "@anil-labs/dnd-element",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Web Component (<dnd-list>) for @anil-labs/dnd-core — sortable lists, cross-list groups, multi-drag and keyboard a11y in any framework or plain HTML via a script tag.",
   "type": "module",
   "main": "./dist/index.cjs",

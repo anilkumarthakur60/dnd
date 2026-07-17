@@ -1,6 +1,6 @@
 {
   "name": "@anil-labs/dnd-react",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "React bindings for @anil-labs/dnd-core — the <Draggable> component and useDraggable hook for sortable lists, cross-list groups, multi-drag and keyboard a11y.",
   "type": "module",
   "main": "./dist/index.cjs",
