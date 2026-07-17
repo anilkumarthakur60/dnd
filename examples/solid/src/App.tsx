@@ -1,4 +1,4 @@
-import { createSignal, For, type JSX } from 'solid-js'
+import { createSignal, For, Show, type JSX } from 'solid-js'
 import { createDraggable, type GhostFactoryInfo } from '@anil-labs/dnd-solid'
 
 interface Item {
@@ -21,6 +21,7 @@ const SECTIONS: [string, string][] = [
   ['keyboard', 'Keyboard'],
   ['ghost', 'Custom ghost'],
   ['spill', 'Spill to delete'],
+  ['nested', 'Nested lists'],
   ['api', 'API & events'],
 ]
 
@@ -308,6 +309,80 @@ function SpillDemo() {
   )
 }
 
+interface TreeItem {
+  id: number
+  label: string
+  children: TreeItem[]
+}
+
+let treeUid = 0
+const nextTreeId = () => ++treeUid
+
+function TreeNode(props: { items: TreeItem[]; onItemsChange: (items: TreeItem[]) => void }) {
+  const dnd = createDraggable(() => props.items, props.onItemsChange, {
+    group: 'tree',
+    animation: 200,
+    emptyInsertThreshold: 14,
+  })
+  return (
+    <ul
+      class="tree-list"
+      classList={{ 'tree-list--empty': props.items.length === 0 }}
+      ref={dnd.ref}
+    >
+      <For each={props.items}>
+        {(item, i) => (
+          <li {...dnd.itemProps(i())}>
+            <div class="tree-node">
+              <div class="tree-row">
+                <span class="grip">⠿</span>
+                <span class="tree-label">{item.label}</span>
+              </div>
+              <Show when={item.label.endsWith('/')}>
+                <TreeNode
+                  items={item.children}
+                  onItemsChange={(children) => {
+                    const next = props.items.slice()
+                    next[i()] = { ...item, children }
+                    props.onItemsChange(next)
+                  }}
+                />
+              </Show>
+            </div>
+          </li>
+        )}
+      </For>
+    </ul>
+  )
+}
+
+function TreeDemo() {
+  const [tree, setTree] = createSignal<TreeItem[]>([
+    {
+      id: nextTreeId(),
+      label: 'src/',
+      children: [
+        {
+          id: nextTreeId(),
+          label: 'components/',
+          children: [
+            { id: nextTreeId(), label: 'Button.tsx', children: [] },
+            { id: nextTreeId(), label: 'Modal.tsx', children: [] },
+          ],
+        },
+        { id: nextTreeId(), label: 'index.ts', children: [] },
+      ],
+    },
+    {
+      id: nextTreeId(),
+      label: 'tests/',
+      children: [{ id: nextTreeId(), label: 'app.spec.ts', children: [] }],
+    },
+    { id: nextTreeId(), label: 'package.json', children: [] },
+  ])
+  return <TreeNode items={tree()} onItemsChange={setTree} />
+}
+
 function ApiDemo() {
   const [list, setList] = createSignal(make('Alpha', 'Bravo', 'Charlie'))
   const [log, setLog] = createSignal<{ k: string; d: string }[]>([])
@@ -545,6 +620,24 @@ export default function App() {
       </Section>
       <Section
         n="10"
+        id="nested"
+        title="Nested lists (trees)"
+        desc={
+          <>
+            Trees are just lists inside list items. Give every level the same <code>group</code> and
+            items drag freely between branches and depths.
+          </>
+        }
+        use={
+          <>
+            <b>Use it for</b> file trees, comment threads, org charts.
+          </>
+        }
+      >
+        <TreeDemo />
+      </Section>
+      <Section
+        n="11"
         id="api"
         title="Programmatic API & live events"
         desc={

@@ -85,7 +85,95 @@ createSortable($('ghost-list'), {
 // 9 · Spill to delete
 createSortable($('spill-list'), { removeOnSpill: true, animation: 200 })
 
-// 10 · Programmatic API & live events
+// 10 · Nested lists (trees)
+interface TreeItem {
+  id: number
+  label: string
+  children: TreeItem[]
+}
+
+let treeUid = 0
+const nextTreeId = (): number => ++treeUid
+
+const treeData: TreeItem[] = [
+  {
+    id: nextTreeId(),
+    label: 'src/',
+    children: [
+      {
+        id: nextTreeId(),
+        label: 'components/',
+        children: [
+          { id: nextTreeId(), label: 'Button.ts', children: [] },
+          { id: nextTreeId(), label: 'Modal.ts', children: [] },
+        ],
+      },
+      { id: nextTreeId(), label: 'index.ts', children: [] },
+    ],
+  },
+  {
+    id: nextTreeId(),
+    label: 'tests/',
+    children: [{ id: nextTreeId(), label: 'app.spec.ts', children: [] }],
+  },
+  { id: nextTreeId(), label: 'package.json', children: [] },
+]
+
+const treeStatus = $('tree-status')
+
+// A folder emptied by dragging its last child out still needs a visible
+// "drop here" target, not just invisible blank space.
+function updateTreeEmptyMarkers(): void {
+  $('tree-root')
+    .querySelectorAll<HTMLUListElement>('ul.tree-list')
+    .forEach((ul) => ul.classList.toggle('tree-list--empty', ul.children.length === 0))
+}
+
+// Every level — however deep — is its own `createSortable` instance sharing
+// the same `group`, so items drag freely between branches and depths. The
+// engine itself refuses to drop a branch inside its own descendants and
+// picks the deepest list under the pointer, so no manual guard is needed.
+function buildTreeList(items: TreeItem[]): HTMLUListElement {
+  const ul = document.createElement('ul')
+  ul.className = 'tree-list'
+  for (const item of items) ul.appendChild(buildTreeNode(item))
+  createSortable(ul, {
+    group: 'tree',
+    animation: 200,
+    emptyInsertThreshold: 14,
+    onEnd: ({ item, cancelled }) => {
+      if (cancelled) return
+      const label = item.querySelector('.tree-label')?.textContent ?? 'item'
+      treeStatus.textContent = `Moved "${label}" — its whole branch moved with it.`
+      updateTreeEmptyMarkers()
+    },
+  })
+  return ul
+}
+
+function buildTreeNode(item: TreeItem): HTMLLIElement {
+  const li = document.createElement('li')
+  li.className = 'tree-node'
+
+  const row = document.createElement('div')
+  row.className = 'tree-row'
+  const grip = document.createElement('span')
+  grip.className = 'grip'
+  grip.textContent = '⠿'
+  const label = document.createElement('span')
+  label.className = 'tree-label'
+  label.textContent = item.label
+  row.append(grip, label)
+
+  li.append(row)
+  if (item.label.endsWith('/')) li.append(buildTreeList(item.children))
+  return li
+}
+
+$('tree-root').appendChild(buildTreeList(treeData))
+updateTreeEmptyMarkers()
+
+// 11 · Programmatic API & live events
 const apiList = $('api-list')
 const log = $('api-log')
 let counter = 0

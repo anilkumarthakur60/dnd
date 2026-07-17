@@ -15,7 +15,7 @@ Zero-dependency drag & drop — sortable lists, cross-list groups, clone, multi-
 | --- | --- |
 | [`@anil-labs/dnd-core`](./packages/core) | The zero-dependency engine: `createSortable()` for vanilla DOM + the `DndList` controller the bindings are built on. |
 | [`@anil-labs/dnd-react`](./packages/react) | `<Draggable>` component + `useDraggable()` hook. |
-| [`@anil-labs/dnd-vue`](./packages/vue) | `<Draggable>` component (v-model) + `useDraggable()` composable. |
+| [`@anil-labs/dnd`](./packages/vue) | `<Draggable>` component (v-model) + `useDraggable()` composable. |
 | [`@anil-labs/dnd-svelte`](./packages/svelte) | The `use:draggable` action. |
 | [`@anil-labs/dnd-solid`](./packages/solid) | The `createDraggable()` primitive. |
 | [`@anil-labs/dnd-element`](./packages/element) | The `<dnd-list>` Web Component — any framework or plain HTML. |
@@ -58,7 +58,7 @@ const [items, setItems] = useState([{ id: 1, text: 'Apple' }, { id: 2, text: 'Ba
 ```vue
 <script setup>
 import { ref } from 'vue'
-import { Draggable } from '@anil-labs/dnd-vue'
+import { Draggable } from '@anil-labs/dnd'
 import '@anil-labs/dnd-core/styles.css'
 
 const items = ref([{ id: 1, text: 'Apple' }, { id: 2, text: 'Banana' }])

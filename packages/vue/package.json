@@ -1,5 +1,5 @@
 {
-  "name": "@anil-labs/dnd-vue",
+  "name": "@anil-labs/dnd",
   "version": "0.1.0",
   "description": "Vue 3 bindings for @anil-labs/dnd-core — the <Draggable> component and useDraggable composable for sortable lists, cross-list groups, multi-drag and keyboard a11y.",
   "type": "module",

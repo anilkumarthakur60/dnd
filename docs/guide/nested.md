@@ -5,7 +5,7 @@ Trees are just lists inside list items. Give every level the same `group` and it
 ```vue
 <!-- TreeNode.vue -->
 <script setup lang="ts">
-import { Draggable } from '@anil-labs/dnd-vue'
+import { Draggable } from '@anil-labs/dnd'
 
 defineProps<{ items: TreeItem[] }>()
 const emit = defineEmits<{ 'update:items': [TreeItem[]] }>()
