@@ -39,11 +39,11 @@
   "author": "Er. Anil Kumar Thakur <anilkumarthakur60@gmail.com>",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/anilkumarthakur60/vue-dnd.git",
+    "url": "git+https://github.com/anilkumarthakur60/dnd.git",
     "directory": "packages/react"
   },
-  "homepage": "https://github.com/anilkumarthakur60/vue-dnd/tree/main/packages/react#readme",
-  "bugs": "https://github.com/anilkumarthakur60/vue-dnd/issues",
+  "homepage": "https://github.com/anilkumarthakur60/dnd/tree/main/packages/react#readme",
+  "bugs": "https://github.com/anilkumarthakur60/dnd/issues",
   "publishConfig": {
     "access": "public"
   },

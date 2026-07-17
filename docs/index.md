@@ -14,7 +14,7 @@ hero:
       link: https://anil-labs-dnd.vercel.app
     - theme: alt
       text: GitHub
-      link: https://github.com/anilkumarthakur60/vue-dnd
+      link: https://github.com/anilkumarthakur60/dnd
 
 features:
   - icon: 🪶

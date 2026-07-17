@@ -15,6 +15,6 @@ createSortable(document.querySelector('#list'), {
 
 Framework bindings: [`@anil-labs/dnd-react`](https://www.npmjs.com/package/@anil-labs/dnd-react) · [`@anil-labs/dnd`](https://www.npmjs.com/package/@anil-labs/dnd) · [`@anil-labs/dnd-svelte`](https://www.npmjs.com/package/@anil-labs/dnd-svelte) · [`@anil-labs/dnd-solid`](https://www.npmjs.com/package/@anil-labs/dnd-solid) · [`@anil-labs/dnd-element`](https://www.npmjs.com/package/@anil-labs/dnd-element)
 
-- **[Documentation](https://anilkumarthakur60.github.io/vue-dnd/)** · **[Live demos](https://anil-labs-dnd.vercel.app)**
+- **[Documentation](https://anilkumarthakur60.github.io/dnd/)** · **[Live demos](https://anil-labs-dnd.vercel.app)**
 
 MIT © Er. Anil Kumar Thakur

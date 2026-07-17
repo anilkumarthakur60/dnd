@@ -657,7 +657,7 @@ export default function App() {
 
       <footer>
         Every card runs the same zero-dependency <code>@anil-labs/dnd-core</code> engine.{' '}
-        <a href="https://github.com/anilkumarthakur60/vue-dnd">View source on GitHub</a>
+        <a href="https://github.com/anilkumarthakur60/dnd">View source on GitHub</a>
       </footer>
     </main>
   )

@@ -12,7 +12,7 @@ on the newest release before reporting.
 
 Report privately instead:
 
-- Preferred: [open a private security advisory](https://github.com/anilkumarthakur60/vue-dnd/security/advisories/new)
+- Preferred: [open a private security advisory](https://github.com/anilkumarthakur60/dnd/security/advisories/new)
   on GitHub, or
 - Email **anilkumarthakur60@gmail.com** with the details.
 

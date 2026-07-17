@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: 💬 Question / Help
-    url: https://github.com/anilkumarthakur60/vue-dnd/discussions
+    url: https://github.com/anilkumarthakur60/dnd/discussions
     about: Ask questions and discuss usage in GitHub Discussions.
   - name: 🔒 Security issue
-    url: https://github.com/anilkumarthakur60/vue-dnd/security/advisories/new
+    url: https://github.com/anilkumarthakur60/dnd/security/advisories/new
     about: Please report security vulnerabilities privately.

@@ -17,6 +17,6 @@ Svelte bindings for [`@anil-labs/dnd-core`](https://www.npmjs.com/package/@anil-
 </ul>
 ```
 
-- **[Documentation](https://anilkumarthakur60.github.io/vue-dnd/frameworks/svelte)** · **[Live demo](https://anil-labs-dnd.vercel.app/svelte/)**
+- **[Documentation](https://anilkumarthakur60.github.io/dnd/frameworks/svelte)** · **[Live demo](https://anil-labs-dnd.vercel.app/svelte/)**
 
 MIT © Er. Anil Kumar Thakur

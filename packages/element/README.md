@@ -22,6 +22,6 @@
 
 Or straight from a CDN: `<script src="https://unpkg.com/@anil-labs/dnd-element"></script>`.
 
-- **[Documentation](https://anilkumarthakur60.github.io/vue-dnd/frameworks/web-component)** · **[Live demo](https://anil-labs-dnd.vercel.app/element/)**
+- **[Documentation](https://anilkumarthakur60.github.io/dnd/frameworks/web-component)** · **[Live demo](https://anil-labs-dnd.vercel.app/element/)**
 
 MIT © Er. Anil Kumar Thakur

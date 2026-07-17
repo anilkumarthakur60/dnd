@@ -15,6 +15,6 @@ const dnd = createDraggable(items, setItems, { animation: 200 })
 </ul>
 ```
 
-- **[Documentation](https://anilkumarthakur60.github.io/vue-dnd/frameworks/solid)** · **[Live demo](https://anil-labs-dnd.vercel.app/solid/)**
+- **[Documentation](https://anilkumarthakur60.github.io/dnd/frameworks/solid)** · **[Live demo](https://anil-labs-dnd.vercel.app/solid/)**
 
 MIT © Er. Anil Kumar Thakur

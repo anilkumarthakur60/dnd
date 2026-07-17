@@ -12,8 +12,8 @@ bindings for React, Vue, Svelte, Solid and a Web Component.
 ## Getting started
 
 ```bash
-git clone https://github.com/anilkumarthakur60/vue-dnd.git
-cd vue-dnd
+git clone https://github.com/anilkumarthakur60/dnd.git
+cd dnd
 pnpm install
 ```
 

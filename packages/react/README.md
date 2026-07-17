@@ -20,6 +20,6 @@ const [items, setItems] = useState([{ id: 1, text: 'Apple' }, { id: 2, text: 'Ba
 
 Also ships the headless `useDraggable(items, setItems, options)` hook.
 
-- **[Documentation](https://anilkumarthakur60.github.io/vue-dnd/frameworks/react)** · **[Live demo](https://anil-labs-dnd.vercel.app/react/)**
+- **[Documentation](https://anilkumarthakur60.github.io/dnd/frameworks/react)** · **[Live demo](https://anil-labs-dnd.vercel.app/react/)**
 
 MIT © Er. Anil Kumar Thakur

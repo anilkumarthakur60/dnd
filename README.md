@@ -1,12 +1,12 @@
 # @anil-labs/dnd
 
-[![CI](https://github.com/anilkumarthakur60/vue-dnd/actions/workflows/ci.yml/badge.svg)](https://github.com/anilkumarthakur60/vue-dnd/actions/workflows/ci.yml)
+[![CI](https://github.com/anilkumarthakur60/dnd/actions/workflows/ci.yml/badge.svg)](https://github.com/anilkumarthakur60/dnd/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/@anil-labs/dnd-core?label=dnd-core)](https://www.npmjs.com/package/@anil-labs/dnd-core)
 [![license](https://img.shields.io/badge/license-MIT-blue.svg)](./LICENSE)
 
 Zero-dependency drag & drop — sortable lists, cross-list groups, clone, multi-drag, swap mode, keyboard a11y, FLIP animation and autoscroll. One engine built on Pointer Events, with first-class bindings for **React, Vue 3, Svelte, Solid and Web Components**.
 
-- **[Documentation](https://anilkumarthakur60.github.io/vue-dnd/)**
+- **[Documentation](https://anilkumarthakur60.github.io/dnd/)**
 - **[Live demos](https://anil-labs-dnd.vercel.app)** — one per framework
 
 ## Packages
@@ -133,10 +133,10 @@ createSortable(document.querySelector('#list'), {
 
 ## Going further
 
-- **[Groups & cloning](https://anilkumarthakur60.github.io/vue-dnd/guide/groups)** — `pull`/`put` rules, one-way lanes, spill behaviour
-- **[Multi-drag](https://anilkumarthakur60.github.io/vue-dnd/guide/multi-drag)** and **[keyboard a11y](https://anilkumarthakur60.github.io/vue-dnd/guide/keyboard)**
-- **[Swap, grids & tables](https://anilkumarthakur60.github.io/vue-dnd/guide/swap-and-grids)** and **[nested trees](https://anilkumarthakur60.github.io/vue-dnd/guide/nested)**
-- **[All options](https://anilkumarthakur60.github.io/vue-dnd/reference/options)** · **[Events](https://anilkumarthakur60.github.io/vue-dnd/reference/events)** · **[API](https://anilkumarthakur60.github.io/vue-dnd/reference/api)**
+- **[Groups & cloning](https://anilkumarthakur60.github.io/dnd/guide/groups)** — `pull`/`put` rules, one-way lanes, spill behaviour
+- **[Multi-drag](https://anilkumarthakur60.github.io/dnd/guide/multi-drag)** and **[keyboard a11y](https://anilkumarthakur60.github.io/dnd/guide/keyboard)**
+- **[Swap, grids & tables](https://anilkumarthakur60.github.io/dnd/guide/swap-and-grids)** and **[nested trees](https://anilkumarthakur60.github.io/dnd/guide/nested)**
+- **[All options](https://anilkumarthakur60.github.io/dnd/reference/options)** · **[Events](https://anilkumarthakur60.github.io/dnd/reference/events)** · **[API](https://anilkumarthakur60.github.io/dnd/reference/api)**
 
 ## Development
 

@@ -22,6 +22,6 @@ const items = ref([{ id: 1, text: 'Apple' }, { id: 2, text: 'Banana' }])
 
 Also ships the headless `useDraggable(items, options)` composable and the `DndPlugin` global registration.
 
-- **[Documentation](https://anilkumarthakur60.github.io/vue-dnd/frameworks/vue)** · **[Live demo](https://anil-labs-dnd.vercel.app/vue/)**
+- **[Documentation](https://anilkumarthakur60.github.io/dnd/frameworks/vue)** · **[Live demo](https://anil-labs-dnd.vercel.app/vue/)**
 
 MIT © Er. Anil Kumar Thakur

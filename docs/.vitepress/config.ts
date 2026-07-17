@@ -1,11 +1,11 @@
 import { defineConfig } from 'vitepress'
 
-const REPO = 'https://github.com/anilkumarthakur60/vue-dnd'
+const REPO = 'https://github.com/anilkumarthakur60/dnd'
 const DEMOS = 'https://anil-labs-dnd.vercel.app'
 
 export default defineConfig({
   // '/' for local dev and custom domains; the Pages workflow sets DOCS_BASE
-  // to '/vue-dnd/' for the GitHub Pages project site.
+  // to '/dnd/' for the GitHub Pages project site.
   base: process.env.DOCS_BASE ?? '/',
   title: '@anil-labs/dnd',
   description:

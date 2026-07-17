@@ -39,7 +39,7 @@ jobs:
       - name: Build docs
         run: pnpm docs:build
         env:
-          DOCS_BASE: /vue-dnd/ # GitHub Pages project-site path (repo name)
+          DOCS_BASE: /dnd/ # GitHub Pages project-site path (repo name)
 
       - uses: actions/configure-pages@v5
 
