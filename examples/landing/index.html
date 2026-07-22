@@ -1,0 +1,515 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@anil-labs/dnd — zero-dependency drag &amp; drop for every framework</title>
+    <meta
+      name="description"
+      content="Live demos of @anil-labs/dnd: a zero-dependency drag-and-drop engine with sortable lists, cross-list groups, multi-drag, swap grids, keyboard accessibility and FLIP animation — with Vanilla, React, Vue, Svelte, Solid and Web Component bindings."
+    />
+    <meta name="color-scheme" content="light dark" />
+
+    <meta property="og:type" content="website" />
+    <meta
+      property="og:title"
+      content="@anil-labs/dnd — one drag-and-drop engine, every framework"
+    />
+    <meta
+      property="og:description"
+      content="Zero-dependency sortable lists, groups, multi-drag, swap grids and keyboard-accessible reordering. One Pointer-Events core, one idiomatic binding per framework."
+    />
+
+    <link rel="icon" href="data:," />
+  </head>
+  <body>
+    <a class="skip-link" href="#demos">Skip to demos</a>
+
+    <header class="site-header">
+      <div class="shell header-inner">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true">⠿</span>
+          <span class="brand-name">@anil-labs/dnd</span>
+          <span class="brand-version" id="version-badge">v0.0.0</span>
+        </div>
+
+        <div class="header-actions">
+          <div
+            class="segmented"
+            role="group"
+            aria-label="Color theme"
+            id="theme-switch"
+            data-active="light"
+          >
+            <button type="button" data-theme="light" aria-pressed="true">Light</button>
+            <button type="button" data-theme="dark" aria-pressed="false">Dark</button>
+            <button type="button" data-theme="auto" aria-pressed="false">Auto</button>
+          </div>
+          <nav class="header-links" aria-label="Project">
+            <a href="https://anilkumarthakur60.github.io/dnd/">Docs</a>
+            <a href="https://github.com/anilkumarthakur60/dnd">GitHub</a>
+            <a href="https://www.npmjs.com/package/@anil-labs/dnd-core">npm</a>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <!-- ---------------------------------------------------------------- -->
+      <section class="hero">
+        <div class="shell hero-inner">
+          <div class="hero-copy">
+            <p class="eyebrow">Vanilla · React · Vue · Svelte · Solid · Web Components</p>
+            <h1>Drag and drop,<br />done right.</h1>
+            <p class="lead">
+              A zero-dependency engine for sortable lists, cross-list groups, multi-drag, swap grids
+              and fully keyboard-accessible reordering — built on Pointer Events, with one idiomatic
+              binding per framework.
+            </p>
+
+            <div class="install">
+              <code id="install-cmd">npm i @anil-labs/dnd-core</code>
+              <button type="button" id="install-copy" class="copy-btn">Copy</button>
+            </div>
+
+            <div class="hero-cta">
+              <a class="btn btn-primary" href="#demos">Try the demos</a>
+              <a class="btn btn-ghost" href="https://anilkumarthakur60.github.io/dnd/">
+                Read the docs
+              </a>
+            </div>
+
+            <ul class="hero-stats">
+              <li><strong>~10 kB</strong><span>core, gzipped</span></li>
+              <li><strong>0</strong><span>runtime deps</span></li>
+              <li><strong>6</strong><span>framework adapters</span></li>
+            </ul>
+          </div>
+
+          <!-- The hero demo is the product: a real, draggable list. -->
+          <div class="hero-demo">
+            <div class="panel">
+              <div class="panel-head">
+                <span class="panel-title">Grab a row</span>
+                <span class="panel-hint">drag to reorder · touch, mouse or pen</span>
+              </div>
+              <div class="panel-body">
+                <ul class="list" id="hero-list" aria-label="Sprint tasks">
+                  <li class="card">
+                    <span class="grip" aria-hidden="true">⠿</span> Design the landing page
+                  </li>
+                  <li class="card">
+                    <span class="grip" aria-hidden="true">⠿</span> Wire up authentication
+                  </li>
+                  <li class="card">
+                    <span class="grip" aria-hidden="true">⠿</span> Write the API docs
+                  </li>
+                  <li class="card">
+                    <span class="grip" aria-hidden="true">⠿</span> Fix the mobile nav
+                  </li>
+                  <li class="card">
+                    <span class="grip" aria-hidden="true">⠿</span> Ship the dark theme
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------------------- -->
+      <section class="section" id="demos">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Live demos</h2>
+            <p>
+              Every list below is real and draggable, running the published build. There's no
+              framework on this page — each demo is a direct
+              <code>createSortable()</code> call on plain DOM.
+            </p>
+          </div>
+
+          <div class="demo-grid">
+            <article class="panel">
+              <div class="panel-head">
+                <span class="panel-title">Shared lists</span>
+                <span class="panel-hint">one group, drag between</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-note">
+                  Give lists the same <code>group</code> and items move freely between them — the
+                  Kanban primitive.
+                </p>
+                <div class="board">
+                  <div class="col">
+                    <h3>Backlog</h3>
+                    <ul class="list" id="g-backlog" aria-label="Backlog">
+                      <li class="card">Research competitors</li>
+                      <li class="card">Draft the spec</li>
+                      <li class="card">Book the venue</li>
+                    </ul>
+                  </div>
+                  <div class="col">
+                    <h3>Doing</h3>
+                    <ul class="list" id="g-doing" aria-label="Doing">
+                      <li class="card">Build the prototype</li>
+                    </ul>
+                  </div>
+                  <div class="col">
+                    <h3>Done</h3>
+                    <ul class="list" id="g-done" aria-label="Done">
+                      <li class="card">Kick-off meeting</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <span class="panel-title">Multi-drag</span>
+                <span class="panel-hint">select many, move as one</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-note">
+                  <kbd>Ctrl</kbd>/<kbd>⌘</kbd>-click a few rows, then drag any selected one — the
+                  whole batch travels together.
+                </p>
+                <ul class="list" id="multi-list" aria-label="Files">
+                  <li class="card">report-q3.pdf</li>
+                  <li class="card">photo-01.jpg</li>
+                  <li class="card">notes.md</li>
+                  <li class="card">budget.xlsx</li>
+                  <li class="card">deck.key</li>
+                </ul>
+                <p class="status" id="multi-status">Ctrl/⌘-click a few files, then drag one.</p>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <span class="panel-title">Swap grid</span>
+                <span class="panel-hint">2-D tile board</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-note">
+                  <code>swap: true</code> exchanges two tiles instead of inserting — right for
+                  grids, dashboards and galleries.
+                </p>
+                <div class="grid-board" id="swap-grid" aria-label="Tiles"></div>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <span class="panel-title">Handle &amp; filter</span>
+                <span class="panel-hint">grip-only, locked rows</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-note">
+                  <code>handle</code> drags only from the grip; <code>draggable</code> excludes
+                  locked rows so their text stays selectable.
+                </p>
+                <ul class="list" id="handle-list" aria-label="Rows">
+                  <li class="card">
+                    <span class="grip" aria-hidden="true">⠿</span> Drag me by the grip
+                  </li>
+                  <li class="card">
+                    <span class="grip" aria-hidden="true">⠿</span> Text stays selectable
+                  </li>
+                  <li class="locked">
+                    <span class="lock" aria-hidden="true">🔒</span> Locked — can't move
+                  </li>
+                  <li class="card">
+                    <span class="grip" aria-hidden="true">⠿</span> Grips beat stray drags
+                  </li>
+                </ul>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <span class="panel-title">Keyboard &amp; a11y</span>
+                <span class="panel-hint">no mouse required</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-note">
+                  <kbd>Tab</kbd> to a step, <kbd>Space</kbd> to grab, <kbd>↑</kbd>/<kbd>↓</kbd> to
+                  move, <kbd>Space</kbd> to drop, <kbd>Esc</kbd> to cancel — every move announced to
+                  screen readers.
+                </p>
+                <ul class="list" id="kbd-list" aria-label="Recipe steps">
+                  <li class="card">Preheat the oven</li>
+                  <li class="card">Mix the batter</li>
+                  <li class="card">Pour into the tin</li>
+                  <li class="card">Bake for 30 minutes</li>
+                </ul>
+                <p class="status" id="kbd-status">Tab to a step to begin.</p>
+              </div>
+            </article>
+
+            <article class="panel">
+              <div class="panel-head">
+                <span class="panel-title">Spill to delete</span>
+                <span class="panel-hint">drag off the list</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-note">
+                  <code>removeOnSpill: true</code> deletes an item dropped outside the list —
+                  drag-off-to-remove, no separate button.
+                </p>
+                <ul class="list" id="spill-list" aria-label="Subscriptions">
+                  <li class="card">Newsletter subscription</li>
+                  <li class="card">Unused API key</li>
+                  <li class="card">Old draft</li>
+                  <li class="card">Expired coupon</li>
+                </ul>
+                <div class="trash" aria-hidden="true">🗑 Drag a row off the list to delete it</div>
+              </div>
+            </article>
+          </div>
+
+          <div class="demo-grid demo-grid-wide">
+            <article class="panel">
+              <div class="panel-head">
+                <span class="panel-title">Programmatic API &amp; live events</span>
+                <span class="panel-hint">drive it from code</span>
+              </div>
+              <div class="panel-body">
+                <p class="panel-note">
+                  Reorder from your own code — <code>move</code>, <code>insertAt</code>,
+                  <code>removeAt</code> — and watch every event fire. This panel is what the build's
+                  headless guard drives to prove the engine really runs.
+                </p>
+                <div class="toolbar">
+                  <button type="button" class="btn btn-small" id="api-add">+ Add item</button>
+                  <button type="button" class="btn btn-small" id="api-move">
+                    Move first → last
+                  </button>
+                  <button type="button" class="btn btn-small" id="api-remove">Remove last</button>
+                  <button type="button" class="btn btn-small" id="api-shuffle">Shuffle</button>
+                </div>
+                <div class="api-split">
+                  <ul class="list" id="api-list" aria-label="Items">
+                    <li class="card">Alpha</li>
+                    <li class="card">Bravo</li>
+                    <li class="card">Charlie</li>
+                  </ul>
+                  <div class="log" id="api-log"></div>
+                </div>
+              </div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------------------- -->
+      <section class="section section-alt" id="theming">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Theming</h2>
+            <p>
+              The engine ships structural CSS only. One custom property —
+              <code>--dnd-accent</code> — colours the focus ring, the multi-select outline, the
+              keyboard-held marker and the drag-count badge. Set it on any ancestor.
+            </p>
+          </div>
+
+          <div class="theming-grid">
+            <div class="panel">
+              <div class="panel-head">
+                <span class="panel-title">Accent</span>
+                <span class="panel-hint">live — pick one, then drag or Ctrl-click</span>
+              </div>
+              <div class="panel-body">
+                <div class="swatches" role="group" aria-label="Accent color" id="accent-switch">
+                  <button type="button" data-accent="blue" aria-pressed="true">
+                    <span class="swatch" style="background: #6ea8ff"></span>Blue
+                  </button>
+                  <button type="button" data-accent="emerald" aria-pressed="false">
+                    <span class="swatch" style="background: #10b981"></span>Emerald
+                  </button>
+                  <button type="button" data-accent="rose" aria-pressed="false">
+                    <span class="swatch" style="background: #f43f5e"></span>Rose
+                  </button>
+                  <button type="button" data-accent="amber" aria-pressed="false">
+                    <span class="swatch" style="background: #f59e0b"></span>Amber
+                  </button>
+                  <button type="button" data-accent="violet" aria-pressed="false">
+                    <span class="swatch" style="background: #8b5cf6"></span>Violet
+                  </button>
+                </div>
+                <div id="theming-scope">
+                  <ul class="list" id="accent-list" aria-label="Palette">
+                    <li class="card">Ctrl/⌘-click two of these…</li>
+                    <li class="card">…to see the selection outline</li>
+                    <li class="card">Tab in and press Space</li>
+                    <li class="card">…for the keyboard marker</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel">
+              <div class="panel-head"><span class="panel-title">What just changed</span></div>
+              <div class="panel-body">
+                <pre class="code" id="accent-code"></pre>
+                <p class="panel-note">
+                  That's the whole theming API — no class to add, no stylesheet to fork. The
+                  property inherits, so a wrapper can re-accent a whole region at once.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------------------- -->
+      <section class="section" id="keyboard">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Keyboard &amp; accessibility</h2>
+            <p>
+              Drag-and-drop is notoriously mouse-only. This engine makes reordering fully operable
+              from the keyboard, with live-region announcements — try it on the recipe demo above.
+            </p>
+          </div>
+
+          <div class="kbd-grid">
+            <table class="kbd-table">
+              <caption>
+                Reordering
+              </caption>
+              <tbody>
+                <tr>
+                  <th><kbd>Tab</kbd></th>
+                  <td>Focus a list item</td>
+                </tr>
+                <tr>
+                  <th><kbd>Space</kbd></th>
+                  <td>Grab the focused item (and drop it again)</td>
+                </tr>
+                <tr>
+                  <th><kbd>↑</kbd> <kbd>↓</kbd></th>
+                  <td>Move the grabbed item up / down</td>
+                </tr>
+                <tr>
+                  <th><kbd>Esc</kbd></th>
+                  <td>Cancel the move and return it home</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <table class="kbd-table">
+              <caption>
+                Multi-select
+              </caption>
+              <tbody>
+                <tr>
+                  <th><kbd>Ctrl</kbd>/<kbd>⌘</kbd> + click</th>
+                  <td>Add or remove a row from the selection</td>
+                </tr>
+                <tr>
+                  <th><kbd>Shift</kbd> + click</th>
+                  <td>Select a contiguous range</td>
+                </tr>
+                <tr>
+                  <th>drag</th>
+                  <td>Move every selected row together as one batch</td>
+                </tr>
+                <tr>
+                  <th>aria-live</th>
+                  <td>Each grab, move and drop is announced</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------------------- -->
+      <section class="section section-alt" id="features">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Why this one</h2>
+          </div>
+          <div class="feature-grid">
+            <div class="feature">
+              <h3>Zero dependencies</h3>
+              <p>
+                The core pulls in nothing. It's ~10 kB gzipped of plain TypeScript over the Pointer
+                Events API — no jQuery, no framework, no polyfills.
+              </p>
+            </div>
+            <div class="feature">
+              <h3>One engine, real adapters</h3>
+              <p>
+                All the behaviour lives in <code>dnd-core</code>. Each adapter is a thin idiomatic
+                binding — <code>&lt;Draggable&gt;</code> with <code>v-model</code> in Vue,
+                controlled items in React, <code>use:draggable</code> in Svelte, a primitive in
+                Solid.
+              </p>
+            </div>
+            <div class="feature">
+              <h3>Pointer Events, everywhere</h3>
+              <p>
+                One code path for mouse, touch and pen — with a drag threshold, touch delay and
+                autoscroll — so it feels right on a trackpad and a phone alike.
+              </p>
+            </div>
+            <div class="feature">
+              <h3>Keyboard-accessible</h3>
+              <p>
+                Grab, move, drop and cancel from the keyboard, with <code>aria-grabbed</code>,
+                <code>aria-posinset</code> and live-region announcements built in — not bolted on.
+              </p>
+            </div>
+            <div class="feature">
+              <h3>Groups, clone &amp; swap</h3>
+              <p>
+                Cross-list dragging with <code>pull</code>/<code>put</code> rules, clone-on-drag
+                palettes, swap mode for grids, spill-to-delete and nested trees — all in the core.
+              </p>
+            </div>
+            <div class="feature">
+              <h3>FLIP animation</h3>
+              <p>
+                Every reorder animates smoothly from its old position to its new one, and honours
+                <code>prefers-reduced-motion</code> without you writing a keyframe.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ---------------------------------------------------------------- -->
+      <section class="section" id="frameworks">
+        <div class="shell">
+          <div class="section-head">
+            <h2>Per-framework playgrounds</h2>
+            <p>
+              This page is deliberately framework-free. Each adapter has its own playground showing
+              the idiomatic binding for that framework.
+            </p>
+          </div>
+          <div class="fw-grid" id="fw-grid"></div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="shell footer-inner">
+        <p>
+          Built by
+          <a href="https://github.com/anilkumarthakur60">Anil Kumar Thakur</a> · MIT licensed
+        </p>
+        <p class="muted">
+          Every demo on this page runs the same zero-dependency
+          <code>@anil-labs/dnd-core</code> engine.
+        </p>
+      </div>
+    </footer>
+
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>

@@ -55,6 +55,22 @@ importers:
         specifier: ^6.0.5
         version: 6.4.3
 
+  examples/landing:
+    dependencies:
+      '@anil-labs/dnd-core':
+        specifier: workspace:*
+        version: link:../../packages/core
+    devDependencies:
+      jsdom:
+        specifier: ^25.0.1
+        version: 25.0.1
+      typescript:
+        specifier: ^5.7.2
+        version: 5.9.3
+      vite:
+        specifier: ^6.0.5
+        version: 6.4.3
+
   examples/react:
     dependencies:
       '@anil-labs/dnd-core':
@@ -145,12 +161,12 @@ importers:
 
   examples/vue:
     dependencies:
-      '@anil-labs/dnd-core':
-        specifier: workspace:*
-        version: link:../../packages/core
       '@anil-labs/dnd':
         specifier: workspace:*
         version: link:../../packages/vue
+      '@anil-labs/dnd-core':
+        specifier: workspace:*
+        version: link:../../packages/core
       vue:
         specifier: ^3.5.13
         version: 3.5.39(typescript@5.9.3)
